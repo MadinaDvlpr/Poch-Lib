@@ -1,0 +1,127 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root{
+    --lightGrey:#C4C4C4;
+    --Grey: #6F6E77;
+    --Primary: #F2F2F2;
+    --Highlight:#26BFA3;
+    --black: #0D0D0D;
+  }
+
+
+  body {
+    font-family: "Quicksand", Arial, Helvetica, sans-serif;
+    display: flex;
+    min-width: 90vw;
+    min-height: 90vh;
+    padding: 10%;    
+    color: var(--black);
+    background-color:var(--Primary);
+  }
+  h1{
+    font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif;
+  }
+  h2{
+    font-weight: 800;
+    margin: 1em 0;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  div{
+    width: 100%;
+  }
+  img{
+    width: 160px;
+  }
+  .myBtn{
+    box-shadow: 0px 10px 14px -7px #1c8c81;
+	background:linear-gradient(to bottom, #2bd9b9 5%, #199e83 100%);
+	background-color:#2bd9b9;
+	border-radius:4px;
+	border:1px solid #28a9ab;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #269fa3;
+  }
+  .myBtn:hover{
+    background:linear-gradient(to bottom, #199e83 5%, #2bd9b9 100%);
+	background-color:#199e83;
+  }
+  @media only screen and (max-width: 1000px) {
+    .body {
+      margin: auto;
+      max-width: 700px;
+    }
+  }
+  @media screen and (min-width: 100px) {
+    .body {
+      margin: auto;
+      min-width: 100px;
+    }
+  }
+  .body_list,
+  .body_text {
+    float: none;
+    width: auto;
+  }
+  .title {
+    margin-top: 2em;
+    width: 2em;
+    padding: 2em;
+    border-radius: 50%;
+    background-color: var(--Highlight);
+    color: var(--Grey);
+  }
+  .logo {
+    width: 125px;
+    margin: 8%;
+    display: block;
+    padding: 15px;
+    border: 8px solid darkred;
+    box-shadow: 5px 5px 20px black;
+  }
+  .button {
+    background-color: #37a9b4;
+    border: 20px;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 10px 30px;
+    border-radius: 5px;
+  }
+  
+  label {
+    display: inline-block;
+    min-width: 200px;
+  }
+  
+  h2 {
+    text-decoration: none;
+    display: inline-block;
+  }
+  input[type="text" i] {
+    padding: 1px 2px;
+    background-color: rgb(219, 208, 208);
+    color: black;
+    width: 75%;
+    margin: auto;
+    height: 50%;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
