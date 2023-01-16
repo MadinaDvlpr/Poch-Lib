@@ -4,7 +4,7 @@
 		<title>Poch'Lib</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="assets/style/style.css" />
+		<link rel="stylesheet" href="assets/style/sass/style.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,13 +14,25 @@
   	</head>
   	<body>
 		<div id="myBooks">
-			<img src="/assets/img/logo.svg" alt="logo poch lib">
+			<img class="logo" src="assets/img/logo-poch-lib.png" alt="logo poch lib">
 			<h1 class="title">Poch'Lib</h1>
 
 			<h2 class="h2">Nouveau Livre</h2>
 			<hr>
 			<div id="content">
 				<h2>Ma poch'liste</h2>
+			</div>
+			<div class="modal">
+				<h2>Rechercher un livre</h2>
+				<form class="search_form"> 
+				
+				<label for="book_title">Titre du Livre :</label>
+				<input name="book_title" type="text" class="search" placeholder="Titre du Livre" required>
+				<label for="author">Auteur :</label>
+
+				<input name="author"type="text"  class="submit" placeholder="Auteur" required>
+				<button type="submit"></button>
+				</form>
 			</div>
 		</div>
 		<script src="assets/js/script.js"></script>

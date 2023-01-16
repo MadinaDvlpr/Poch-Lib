@@ -22,11 +22,16 @@
     color: var(--black);
     background-color:var(--Primary);
   }
-  h1{
+  h1,h2{
     font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 800;
+    margin: 1em 0;
   }
   h2{
-    font-weight: 800;
+    font-size: .7em;
+  }
+  h1{
+    font-size: .9em;
     margin: 1em 0;
   }
   * {
@@ -36,7 +41,7 @@
     width: 100%;
   }
   img{
-    width: 160px;
+    width: 100px;
   }
   .myBtn{
     box-shadow: 0px 10px 14px -7px #1c8c81;
@@ -58,38 +63,31 @@
     background:linear-gradient(to bottom, #199e83 5%, #2bd9b9 100%);
 	background-color:#199e83;
   }
-  @media only screen and (max-width: 1000px) {
-    .body {
-      margin: auto;
-      max-width: 700px;
-    }
+
+  .modal{
+    display: flex;
   }
-  @media screen and (min-width: 100px) {
-    .body {
-      margin: auto;
-      min-width: 100px;
-    }
+  .search_form{
+    display: flex;
+    flex-direction: column;
   }
+ 
+  
   .body_list,
   .body_text {
     float: none;
     width: auto;
   }
   .title {
-    margin-top: 2em;
-    width: 2em;
-    padding: 2em;
-    border-radius: 50%;
-    background-color: var(--Highlight);
     color: var(--Grey);
+    color: var(--black);
   }
   .logo {
     width: 125px;
     margin: 8%;
     display: block;
     padding: 15px;
-    border: 8px solid darkred;
-    box-shadow: 5px 5px 20px black;
+    box-shadow: 5px 5px 20px rgb(125, 125, 125);
   }
   .button {
     background-color: #37a9b4;
@@ -108,12 +106,20 @@
     display: inline-block;
     min-width: 200px;
   }
-  
-  h2 {
-    text-decoration: none;
-    display: inline-block;
+  @media only screen and (max-width: 1000px) {
+    .body {
+      margin: auto;
+      max-width: 700px;
+    }
   }
-  input[type="text" i] {
+  @media screen and (min-width: 100px) {
+    .body {
+      margin: auto;
+      min-width: 100px;
+    }
+  }
+
+  /*input[type="text" i] {
     padding: 1px 2px;
     background-color: rgb(219, 208, 208);
     color: black;
@@ -124,4 +130,4 @@
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-  }
+  }*/
