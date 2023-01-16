@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -6,17 +8,17 @@
 }
 
 body {
-  font-family: "Quicksand", Arial, Helvetica, sans-serif;
+  font-family: "font-family: 'Quicksand', sans-serif";
   display: flex;
   min-width: 90vw;
   min-height: 90vh;
-  padding: 10%;
-  color: var(--black);
+  padding: 3em;
+  color: #0D0D0D;
   background-color: #F2F2F2;
 }
 
 h1 {
-  font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "font-family: 'Righteous', cursive";
   font-weight: 800;
   margin: 1em 0;
   font-size: 1.5em;
@@ -24,7 +26,7 @@ h1 {
 }
 
 h2 {
-  font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "font-family: 'Righteous', cursive";
   font-weight: 800;
   margin: 1em 0;
   font-size: 1.2em;
@@ -40,23 +42,32 @@ img {
 
 .myBtn {
   box-shadow: 0px 10px 14px -7px #1c8c81;
-  background: linear-gradient(to bottom, #2bd9b9 5%, #199e83 100%);
+  background: linear-gradient();
   background-color: #2bd9b9;
   border-radius: 4px;
   border: 1px solid #28a9ab;
   display: inline-block;
   cursor: pointer;
   color: #F2F2F2;
-  font-family: "font-family: " Quicksand ", Arial, Helvetica, sans-serif";
+  font-family: "font-family: 'Quicksand', sans-serif";
   font-size: 1em;
   font-weight: bold;
   padding: 6px 12px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #269fa3;
+  max-width: 300px;
+  margin: 1em 0;
 }
 .myBtn:hover {
-  background: linear-gradient(to bottom, #2bd9b9 5%, #199e83 100%);
+  background: linear-gradient();
   background-color: #199e83;
+}
+.myBtn#cancel {
+  box-shadow: 0px 10px 14px -7px #1c8c81;
+  background: linear-gradient(to bottom, #ef3939 5%, #7f1454 100%);
+  background-color: #da2736;
+  border: 1px solid #c41932;
+  text-shadow: 0px 1px 0px #d62f48;
 }
 
 .modal {
@@ -114,4 +125,8 @@ img {
   font-size: 1rem;
   margin: 10px 30px;
   border-radius: 5px;
+}
+
+.hidden {
+  display: none;
 }/*# sourceMappingURL=style.css.map */

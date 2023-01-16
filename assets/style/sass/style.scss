@@ -1,4 +1,7 @@
 @import"libs/responsive.scss";
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
 
 $primary:#F2F2F2;
 $highlight:#26BFA3;
@@ -7,9 +10,10 @@ $lightGrey:#C4C4C4;
 $grey:#6F6E77;
 $black:#0D0D0D;
 $padding:2em;
-$gradient:linear-gradient(to bottom, #2bd9b9 5%, #199e83 100%);
-$fontText:"font-family: "Quicksand", Arial, Helvetica, sans-serif";
-$fontTitle:"font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif";
+$gradient:linear-gradient();
+$gradientRed:linear-gradient(to bottom, #ef3939 5%, #7f1454 100%);
+$fontText:"font-family: 'Quicksand', sans-serif";
+$fontTitle:"font-family: 'Righteous', cursive";
 
 * {
 	margin: 0;
@@ -18,23 +22,23 @@ $fontTitle:"font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif";
 	box-sizing: border-box;
 }
 body {
-	font-family: "Quicksand", Arial, Helvetica, sans-serif;
+	font-family: $fontText;
 	display: flex;
 	min-width: 90vw;
 	min-height: 90vh;
-	padding: 10%;
-	color: var(--black);
+	padding: 3em;
+	color: $black;
 	background-color: $primary;
 }
 h1 {
-	font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif;
+	font-family: $fontTitle;
 	font-weight: 800;
 	margin: 1em 0;
 	font-size: 1.5em;
 	margin: 1em 0;
 }
 h2 {
-	font-family: "Rubik", Verdana, Geneva, Tahoma, sans-serif;
+	font-family: $fontTitle;
 	font-weight: 800;
 	margin: 1em 0;
 	font-size: 1.2em;
@@ -60,10 +64,19 @@ img {
 	padding: 6px 12px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #269fa3;
+  max-width: 300px;
+  margin: 1em 0;
 	&:hover {
 		background: $gradient;
 		background-color: #199e83;
 	}
+  &#cancel{
+    box-shadow: 0px 10px 14px -7px #1c8c81;
+	background: $gradientRed;
+	background-color: #da2736;
+	border: 1px solid #c41932;
+	text-shadow: 0px 1px 0px #d62f48;
+  }
 }
 .modal {
 	display: flex;
@@ -114,6 +127,9 @@ img {
 	font-size: 1rem;
 	margin: 10px 30px;
 	border-radius: 5px;
+}
+.hidden{
+  display: none;
 }
 
 
