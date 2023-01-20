@@ -6,16 +6,20 @@ var deleteBtn = document.createElement("button");
 var searchBookBtn = document.createElement("button");
 var inputTitle = document.createElement("input");
 var inputAuthor = document.createElement("input");
-var book ="";
+var book ={
+            title : "",
+            author : "",
+            id :"",
+            description:"",
+            img: ""
+          };
+
 var bookList =[];
-
-
 content.appendChild(btnAdd);
 btnAdd.addEventListener('click', showSearchBookForm);
 
 
-
-  function showSearchBookForm() {
+function showSearchBookForm() {
     // retrait du bouton ajouter un livre
     btnAdd.classList.add('hidden');
 
@@ -28,7 +32,7 @@ btnAdd.addEventListener('click', showSearchBookForm);
     const form = document.createElement("form")
     form.classList.add('search_form');
 
-    //création de l'element input titre du livre
+    //création de l'input titre du livre
     var labelTitle = document.createElement("label");
     labelTitle.innerHTML = "Titre :";
     inputTitle.setAttribute("type", "text");
@@ -37,7 +41,7 @@ btnAdd.addEventListener('click', showSearchBookForm);
     inputTitle.id ='title';
 
 
-    //création de l'element input auteur du livre
+    //création de l'input auteur du livre
     
     var labelAuthor = document.createElement("label");
     labelAuthor.innerHTML = "Auteur :";
@@ -47,7 +51,7 @@ btnAdd.addEventListener('click', showSearchBookForm);
     inputTitle.id ='author';
 
 
-    // création du bouton de recherche
+    // création du bouton de rechérche
     
     searchBookBtn.innerHTML = "Rechercher";
     searchBookBtn.classList.add('myBtn');
@@ -56,13 +60,14 @@ btnAdd.addEventListener('click', showSearchBookForm);
     
   
     // Création du bouton annuler
+   
     deleteBtn.innerHTML = "Annuler";
     deleteBtn.classList.add('myBtn');
     deleteBtn.id = 'cancel';
     deleteBtn.type = "reset";
     deleteBtn.style.width = "20%";
 
-    // Ajout des divers élements dans le formulaire
+    // Ajouter des divers élements dans le formulaire
     form.appendChild(labelTitle);
     form.appendChild(inputTitle);
     form.appendChild(labelAuthor);
@@ -84,19 +89,12 @@ btnAdd.addEventListener('click', showSearchBookForm);
      );
   }
 
-  
-  function getFieldValue(inputId) {
-    var book ={
-      title : inputTitle.value,
-      author : inputAuthor.value,
-    };
-    return book;
-  }
 
 function searchBook(){
-var book ="";
-var bookList =[];
-getFieldValue();
+
+
+book.title = inputTitle.value;
+book.author = inputAuthor.value;
 
 var url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
 
@@ -111,56 +109,48 @@ const fetchBooks = async () => {
     //const books = await response.json();
     console.log(bookList);
   };
+  var displayBookSearch = async () => {
+    await fetchBooks();
+    addBook();
+    console.log("MA FONCTION DISPLAY SEARCH");
+  }
+  
   var outputList = document.querySelector("#content");
   var container =
     `<div>
     <h2>Résultat de recherche</h2>
     
-    <div id="searchResults">
-      <ul id="book_list">
+    <div id="searchResults" ? >
+      <ul id="book_list" class="book_list">
       </ul>
       </div>
     `;
     outputList.insertAdjacentHTML('afterbegin',container);
     console.log(outputList);
 
-  //var bookDisplay = async () => {
-    //await fetchBooks();
-   // for(var i=0; i<bookList.length;i++){
-   // var myBooks = 
-   // `
-   // <li id="bookItem">
-   //   <h3>${book.title}</h3>
-   //   <p>${book.author}</p>
-    //  <img src="" alt="">
-    
-  //  </li>
-   // `
-
-  //}
-    
+  
 
     
-    };
+  
+  fetchBooks();
+  displayBookSearch();
 
-
-
-function createBookCard(){
-  // création de la div
-  const bookCard = document.createElement("card");
 }
 
-var card = `
-<div class="book_card">
-<p class="book_title"></p>
-<p class="book_author"></p>
-<p class="book_id"></p>
-<img src="" alt="">
-<p class="book_description"></p>
-</div>
-`
-  
-  searchBook();
- // displayBooks();
+
+
+
+function addElement() {
+  console.log("MA FONCTION ADD ELEMENT");
+var element = document.createElement('li');
+
+var parent = document.getElementById('book_list');
+parent.insertAdjacentHTML('afterbegin', element);
+}
+
+
+
+
+
 
 searchBookBtn.addEventListener('submit', searchBook);
