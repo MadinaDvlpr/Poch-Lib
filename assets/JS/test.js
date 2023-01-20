@@ -150,7 +150,51 @@ parent.insertAdjacentHTML('afterbegin', element);
 
 
 
+function addBook() {
 
+  console.log("MA FONCTION ADD BOOK");
+  // Créer div pour le book
+  const bookID = book.id;
+  addElement(parent, "ul", {
+    className: "book_list",
+    id: bookID,
+  });
+
+
+  // Insérer le titre (dans le conteneur du book)
+  addElement(bookID, "p", {
+    className: "book_title",
+    innerHTML: "Titre: " + book.title,
+  });
+
+  // Insérer l'ID (dans le conteneur du book)
+  addElement(bookID, "p", {
+    className: "book_id",
+    innerHTML: "ID: " + book.id,
+  });
+
+  // Insérer l'auteur (dans le conteneur du book)
+  addElement(bookID, "p", {
+    className: "book_author",
+    innerHTML: "Auteurs: " + book.author,
+  });
+
+  // Insérer la description (dans le conteneur du book)
+  addElement(bookID, "p", {
+    className: "book-description",
+    innerHTML: book.description ? `Description:${book.description}`: "Informations manquantes",
+  });
+
+  // Insérer l'image (dans le conteneur du book)
+  addElement(bookID, "img", {
+    className: "book-image",
+    innerHTML: book.imageLinks
+      ? "<img width='100' height='100' src='" +
+        book.imageLinks.thumbnail +
+        "' />"
+      : "<img width='100' height='100' src='unavailable.png' />",
+  });
+}
 
 
 searchBookBtn.addEventListener('submit', searchBook);
