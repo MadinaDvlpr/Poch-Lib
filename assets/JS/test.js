@@ -90,33 +90,17 @@ function showSearchBookForm() {
   }
 
 
-function searchBook(){
+async function searchBook(){
+  book.title = inputTitle.value;
+  book.author = inputAuthor.value;
 
-
-book.title = inputTitle.value;
-book.author = inputAuthor.value;
-
-var url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
-
-
-//appel de l'API Google Books (GET)
-//asynchrone pour laisser le temps d'aller chercher les films avant d'exécuter le reste du code sinon pas sde données 
-const fetchBooks = async () => {
-      bookList = await fetch(url).then((response) => response.json());
-
-
-    //une fois le resultat obtenu on converti le resulat json
-    //const books = await response.json();
-    console.log(bookList);
-  };
-  var displayBookSearch = async () => {
-    await fetchBooks();
-    addBook();
-    console.log("MA FONCTION DISPLAY SEARCH");
-  }
+  const url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
+  const bookList = await fetch(url).then((response) => response.json());
   
-  var outputList = document.querySelector("#content");
-  var container =
+  console.log(bookList);
+
+  const outputList = document.querySelector("#content");
+  const container =
     `<div>
     <h2>Résultat de recherche</h2>
     
@@ -125,34 +109,54 @@ const fetchBooks = async () => {
       </ul>
       </div>
     `;
+
     outputList.insertAdjacentHTML('afterbegin',container);
-    console.log(outputList);
 
-  
-
-    
-  
-  fetchBooks();
-  displayBookSearch();
+  for(const book of bookList.items){
+    renderBook(book)
+  }
 
 }
 
 
-
-
-function addElement(book) {
+function addElement() {
   console.log("MA FONCTION ADD ELEMENT");
 var element = document.createElement('li');
 
 var parent = document.getElementById('book_list');
-parent.insertElement('afterbegin', element);
+parent.insertAdjacentHTML('afterbegin', element);
 }
 
 
+function renderBook(book) {
+  console.log(book);
 
-function addBook(book) {
+  const elementBook = document.createElement('li');
 
-  console.log("MA FONCTION ADD BOOK");
+  /*
+  const bookTitleElem = document.createElement('p');
+  bookTitleElem.innerHTML = book.volumeInfo.title;
+
+  const bookDescElem = document.createElement('p');
+  bookDescElem.innerHTML = book.volumeInfo.description;
+
+  elementBook.insertAdjacentElement('afterbegin', bookTitleElem);
+  elementBook.insertAdjacentElement('afterbegin', bookDescElem);
+   */
+  elementBook.insertAdjacentHTML('beforeend', `
+    <h3 class="book_title">${book.volumeInfo.title}</h3>
+    <p class="book_author">${book.volumeInfo.authors}</p>
+    <img src="${book.volumeInfo.imageLinks}" alt="">
+    <span class="book_description">${book.volumeInfo.description}</span>
+
+    
+  `);
+
+
+  var parent = document.getElementById('book_list');
+  parent.insertAdjacentElement('beforeend', elementBook);
+
+  /*
   // Créer div pour le book
   const bookID = book.id;
   addElement(parent, "ul", {
@@ -160,9 +164,8 @@ function addBook(book) {
     id: bookID,
   });
 
-
   // Insérer le titre (dans le conteneur du book)
-  /*addElement(bookID, "p", {
+  addElement(bookID, "p", {
     className: "book_title",
     innerHTML: "Titre: " + book.title,
   });
@@ -193,7 +196,10 @@ function addBook(book) {
         book.imageLinks.thumbnail +
         "' />"
       : "<img width='100' height='100' src='unavailable.png' />",
-  });*/
+  });
+  */
+
+
 }
 
 
