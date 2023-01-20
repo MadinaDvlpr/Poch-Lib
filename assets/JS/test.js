@@ -6,6 +6,9 @@ var deleteBtn = document.createElement("button");
 var searchBookBtn = document.createElement("button");
 var inputTitle = document.createElement("input");
 var inputAuthor = document.createElement("input");
+var book ="";
+var bookList =[];
+
 
 content.appendChild(btnAdd);
 btnAdd.addEventListener('click', showSearchBookForm);
@@ -80,19 +83,20 @@ btnAdd.addEventListener('click', showSearchBookForm);
       }
      );
   }
+
+  
   function getFieldValue(inputId) {
-    var inputElement = document.getElementById(inputId);
-    return inputElement.value || "";
+    var book ={
+      title : inputTitle.value,
+      author : inputAuthor.value,
+    };
+    return book;
   }
 
 function searchBook(){
-var book ={
-  title : getFieldValue("title"),
-  author : getFieldValue("author"),
-};
+var book ="";
 var bookList =[];
-book.title = inputTitle.value;
-book.author = inputAuthor.value;
+getFieldValue();
 
 var url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
 
@@ -120,29 +124,43 @@ const fetchBooks = async () => {
     outputList.insertAdjacentHTML('afterbegin',container);
     console.log(outputList);
 
-  var bookDisplay = async () => {
-    await fetchBooks();
-    for(var i=0; i<bookList.length;i++){
-    var myBooks = 
-    `
-    <li id="bookItem">
-      <h3>${book.title}</h3>
-      <p>${book.author}</p>
-      <img src="" alt="">
+  //var bookDisplay = async () => {
+    //await fetchBooks();
+   // for(var i=0; i<bookList.length;i++){
+   // var myBooks = 
+   // `
+   // <li id="bookItem">
+   //   <h3>${book.title}</h3>
+   //   <p>${book.author}</p>
+    //  <img src="" alt="">
     
-    </li>
-    `
+  //  </li>
+   // `
 
-  }
+  //}
     
 
-    container.insertAdjacentHTML('afterbegin', myBooks)
+    
     };
 
 
-  
-  fetchBooks();
-  
-  bookDisplay();
+
+function createBookCard(){
+  // création de la div
+  const bookCard = document.createElement("card");
 }
+
+var card = `
+<div class="book_card">
+<p class="book_title"></p>
+<p class="book_author"></p>
+<p class="book_id"></p>
+<img src="" alt="">
+<p class="book_description"></p>
+</div>
+`
+  
+  searchBook();
+ // displayBooks();
+
 searchBookBtn.addEventListener('submit', searchBook);
