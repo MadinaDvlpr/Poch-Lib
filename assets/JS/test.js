@@ -140,17 +140,17 @@ const fetchBooks = async () => {
 
 
 
-function addElement() {
+function addElement(book) {
   console.log("MA FONCTION ADD ELEMENT");
 var element = document.createElement('li');
 
 var parent = document.getElementById('book_list');
-parent.insertAdjacentHTML('afterbegin', element);
+parent.insertElement('afterbegin', element);
 }
 
 
 
-function addBook() {
+function addBook(book) {
 
   console.log("MA FONCTION ADD BOOK");
   // Créer div pour le book
@@ -162,7 +162,7 @@ function addBook() {
 
 
   // Insérer le titre (dans le conteneur du book)
-  addElement(bookID, "p", {
+  /*addElement(bookID, "p", {
     className: "book_title",
     innerHTML: "Titre: " + book.title,
   });
@@ -193,7 +193,7 @@ function addBook() {
         book.imageLinks.thumbnail +
         "' />"
       : "<img width='100' height='100' src='unavailable.png' />",
-  });
+  });*/
 }
 
 
