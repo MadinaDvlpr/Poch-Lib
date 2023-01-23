@@ -133,7 +133,7 @@ function renderBook(book) {
   var placeHldr = document.createElement('img');
   
   //je crée la variable qui va contenir l'image par defaut ici
-  placeHldr.setAttribute("src", "/assets/img/cover.png");
+  placeHldr.setAttribute("src", "/assets/img/unavailable.png");
   console.log("ici mon placeholer  :" + placeHldr.src)
   var bookCover = book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : placeHldr.src;
   console.log("Mon book Cover ici : "+ bookCover);
@@ -148,10 +148,12 @@ function renderBook(book) {
   <h3 class="book_title">${book.volumeInfo.title}</h3>
   <p class="book_author">${authors}</p>
   <p class="book_id"> Id : ${book.id}</p>
+  <i class="fa-solid fa-bookmark"></i>
   </div>
   <img class="book_cover"src="${bookCover}" alt="book cover">
   <div class="overlay">
   <span class="book_description">${description}</span>
+  
   </div>
   `);
     var parent = document.getElementById('book_list');
