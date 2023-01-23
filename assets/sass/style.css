@@ -36,10 +36,6 @@ div {
   width: 100%;
 }
 
-img {
-  width: 100px;
-}
-
 .myBtn {
   box-shadow: 0px 10px 14px -7px #1c8c81;
   background: linear-gradient();
@@ -95,25 +91,15 @@ img {
   font-family: "font-family: 'Quicksand', sans-serif";
 }
 
-.body_list {
-  float: none;
-  width: auto;
-}
-
-.body_text {
-  float: none;
-  width: auto;
-}
-
 .title {
   color: #0D0D0D;
 }
 
 .logo {
   width: 125px;
-  margin: 8%;
+  margin: 2%;
   display: block;
-  padding: 15px;
+  padding: 5px;
   box-shadow: 5px 5px 20px #6F6E77;
 }
 
@@ -132,4 +118,28 @@ img {
 
 .hidden {
   display: none;
+}
+
+.book_list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 4rem 5vw;
+  padding: 0;
+  list-style: none;
+  border: solid 1px black;
+}
+.book_list li {
+  list-style: none;
+}
+.book_list h3.book_title {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  text-decoration: none;
+  list-style: none;
 }/*# sourceMappingURL=style.css.map */

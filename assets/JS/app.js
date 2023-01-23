@@ -51,7 +51,7 @@ function showSearchBookForm() {
     inputTitle.id ='author';
 
 
-    // création du bouton de recherche
+    // création du bouton de rechérche
     
     searchBookBtn.innerHTML = "Rechercher";
     searchBookBtn.classList.add('myBtn');
@@ -82,8 +82,8 @@ function showSearchBookForm() {
     content.appendChild(formSection);
     searchBookBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(inputTitle.value);
-        console.log(inputAuthor.value);
+        //console.log(inputTitle.value);
+       // console.log(inputAuthor.value);
         searchBook();
       }
      );
@@ -97,16 +97,15 @@ async function searchBook(){
   const url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
   const bookList = await fetch(url).then((response) => response.json());
   
-  console.log(bookList);
+ // console.log(bookList);
 
   const outputList = document.querySelector("#content");
   const container =
     `<div>
     <h2>Résultat de recherche</h2>
     
-    <div id="searchResults" >
-    <ul class="book_list cards container" id="book_list">
-      
+    <div id="searchResults" ? >
+      <ul id="book_list" class="book_list">
       </ul>
       </div>
     `;
@@ -120,39 +119,37 @@ async function searchBook(){
 }
 
 
-function renderBook(book) {
-const elementBook = document.createElement('li');
-elementBook.classList.add('card');
-var placeHldr = document.createElement('img');
-
-//je crée la variable qui va contenir l'image par defaut ici
-placeHldr.setAttribute("src", "/assets/img/cover.png");
-console.log("ici mon placeholer  :" + placeHldr.src)
-var bookCover = book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : placeHldr.src;
-console.log("Mon book Cover ici : "+ bookCover);
-
-elementBook.insertAdjacentHTML('beforeend', `
-<h3 class="book_title">${book.volumeInfo.title}</h3>
-<p class="book_author">${book.volumeInfo.authors}</p>
-<p class="book_id">${book.id}</p>
-<img src="${bookCover}" alt="book cover">
-<span class="book_description">${book.volumeInfo.description}</span>
-`);
-  var parent = document.getElementById('book_list');
-  parent.insertAdjacentElement('beforeend', elementBook);
-  
-
+function addElement() {
+var element = document.createElement('li');
+element.classList.add("book_item");
+var parent = document.getElementById('book_list');
+parent.insertAdjacentHTML('afterbegin', element);
 }
 
-//function LimitDesc(){
-  //desc = ${book.volumeInfo.description};
-  //if( desc === undefined){
-   // description ="information manquante";
-  //}else{
-   // (book.volumeInfo.description).substring(0, 100);
-  //}
- 
-//}
-//LimitDesc();
+
+function renderBook(book) {
+  const elementBook = document.createElement('li');
+  elementBook.classList.add('card');
+  var placeHldr = document.createElement('img');
+  
+  //je crée la variable qui va contenir l'image par defaut ici
+  placeHldr.setAttribute("src", "/assets/img/cover.png");
+  console.log("ici mon placeholer  :" + placeHldr.src)
+  var bookCover = book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : placeHldr.src;
+  console.log("Mon book Cover ici : "+ bookCover);
+  
+  elementBook.insertAdjacentHTML('beforeend', `
+  <h3 class="book_title">${book.volumeInfo.title}</h3>
+  <p class="book_author">${book.volumeInfo.authors}</p>
+  <p class="book_id">${book.id}</p>
+  <img class="book_cover"src="${bookCover}" alt="book cover">
+  <span class="book_description">${book.volumeInfo.description}</span>
+  `);
+    var parent = document.getElementById('book_list');
+    parent.insertAdjacentElement('beforeend', elementBook);
+    
+  
+  }
+  
 
 searchBookBtn.addEventListener('submit', searchBook);

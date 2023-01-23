@@ -1,76 +1,287 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: "Red Hat Mono", monospace;
-    max-width: 700px;
-    min-width: 100px;
-    margin-left: 10%;
-    background-color: beige;
-  }
-  * {
-    box-sizing: border-box;
-  }
-  @media only screen and (max-width: 1000px) {
-    .body {
-      margin: auto;
-      max-width: 700px;
-    }
-  }
-  @media screen and (min-width: 100px) {
-    .body {
-      margin: auto;
-      min-width: 100px;
-    }
-  }
-  .body_list,
-  .body_text {
-    float: none;
-    width: auto;
-  }
-  .title {
-    margin: 8%;
-    width: 18px;
-    padding: 18px;
-    border-radius: 500%;
-    background-color: #9ca7a8;
-  }
-  .logo {
-    width: 125px;
-    margin: 8%;
+  font-family: "font-family: 'Quicksand', sans-serif";
+  display: flex;
+  min-width: 90vw;
+  min-height: 90vh;
+  padding: 3em;
+  color: #0D0D0D;
+  background-color: #F2F2F2;
+}
+
+h1 {
+  font-family: "font-family: 'Righteous', cursive";
+  font-weight: 800;
+  margin: 1em 0;
+  font-size: 1.5em;
+  margin: 1em 0;
+}
+
+h2 {
+  font-family: "font-family: 'Righteous', cursive";
+  font-weight: 800;
+  margin: 1em 0;
+  font-size: 1.2em;
+}
+
+div {
+  width: 100%;
+}
+
+.myBtn {
+  box-shadow: 0px 10px 14px -7px #1c8c81;
+  background: linear-gradient();
+  background-color: #2bd9b9;
+  border-radius: 4px;
+  border: 1px solid #28a9ab;
+  display: inline-block;
+  cursor: pointer;
+  color: #F2F2F2;
+  font-family: "font-family: 'Quicksand', sans-serif";
+  font-size: 1em;
+  font-weight: bold;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #269fa3;
+  min-width: 150px;
+  max-width: 300px;
+  margin: 1em 0;
+}
+.myBtn:hover {
+  background: linear-gradient();
+  background-color: #199e83;
+}
+.myBtn#cancel {
+  box-shadow: 0px 10px 14px -7px #1c8c81;
+  background: linear-gradient(to bottom, #ef3939 5%, #7f1454 100%);
+  background-color: #da2736;
+  border: 1px solid #c41932;
+  text-shadow: 0px 1px 0px #d62f48;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+}
+.modal h2 {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.search_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1em 0;
+  gap: 1em;
+}
+.search_form input {
+  width: 100%;
+  min-height: 2.2em;
+}
+.search_form label {
+  font-family: "font-family: 'Quicksand', sans-serif";
+}
+
+.body_list {
+  float: none;
+  width: auto;
+}
+
+.body_text {
+  float: none;
+  width: auto;
+}
+
+.title {
+  color: #0D0D0D;
+}
+
+.logo {
+  width: 125px;
+  margin: 2%;
+  display: block;
+  padding: 5px;
+  box-shadow: 5px 5px 20px #6F6E77;
+}
+
+.button {
+  background-color: #37a9b4;
+  border: 20px;
+  color: #F2F2F2;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 10px 30px;
+  border-radius: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2em;
+  margin: 4rem 5vw;
+  padding: 0;
+  list-style: none; 
+
+}
+.cards img {
+  width: 100%;
+  position: relative;
+  -webkit-border-top-left-radius: 30px;
+-webkit-border-bottom-right-radius: 30px;
+-moz-border-radius-topleft: 30px;
+-moz-border-radius-bottomright: 30px;
+border-top-left-radius: 30px;
+border-bottom-right-radius: 30px;
+
+}
+.overlay{
+ 
+  transition: transform 300ms;
+  transform: translate3d(0, 100%, 0);
+  
+}
+.book_description{
+  opacity: 0;
+  transition: opacity 500ms 100ms;
+}
+
+.book_title {
+
+  width: 100%;
+  transition: transform 300ms;
+  transform: translate3d(0, -100%, 0);
+}
+.book_title, .book_author, .book_description{
+  position: absolute;
+  top: -50px;
+  left: 10px;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  border-radius: 40px 0 0 0;
+  overflow: hidden;
+  text-decoration: none;
+  list-style: none;
+}
+.cards img:hover,
+.overlay:hover ~ .overlay .book_description,
+.overlay:hover ~ .overlay,
+.overlay:focus ~ .overlay{
+  transform: translate3d(0, 0, 0);
+  cursor: pointer;
+}
+  /*.card {
+    position: relative;
     display: block;
-    padding: 15px;
-    border: 8px solid darkred;
-    box-shadow: 5px 5px 20px black;
-  }
-  .button {
-    background-color: #37a9b4;
-    border: 20px;
-    color: white;
-    padding: 1rem;
-    text-align: center;
+    height: 100%;  
+    border-radius: calc(var(--curve) * 1px);
+    overflow: hidden;
     text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    margin: 10px 30px;
-    border-radius: 5px;
   }
   
-  label {
-    display: inline-block;
-    min-width: 200px;
+  .card__image {      
+    width: 100%;
+    height: auto;
   }
   
-  h2 {
-    text-decoration: none;
-    display: inline-block;
+  .card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;      
+    border-radius: calc(var(--curve) * 1px);    
+    background-color: var(--surface-color);      
+    transform: translateY(100%);
+    transition: .2s ease-in-out;
   }
-  input[type="text" i] {
-    padding: 1px 2px;
-    background-color: rgb(219, 208, 208);
-    color: black;
-    width: 75%;
-    margin: auto;
-    height: 50%;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+  
+  .card:hover .card__overlay {
+    transform: translateY(0);
   }
+  
+  .card__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    padding: 2em;
+    border-radius: calc(var(--curve) * 1px) 0 0 0;    
+    background-color: var(--surface-color);
+    transform: translateY(-100%);
+    transition: .2s ease-in-out;
+  }
+  
+  .card__arc {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    bottom: 100%;
+    right: 0;      
+    z-index: 1;
+  }
+  
+  .card__arc path {
+    fill: var(#fff);
+    d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+  }       
+  
+  .card:hover .card__header {
+    transform: translateY(0);
+  }
+  
+  .card__thumb {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;      
+    border-radius: 50%;      
+  }
+  
+  .card__title {
+    font-size: 1em;
+    margin: 0 0 .3em;
+    color: #6A515E;
+  }
+  
+  .card__tagline {
+    display: block;
+    margin: 1em 0;
+    font-family: "MockFlowFont";  
+    font-size: .8em; 
+    color: #D7BDCA;  
+  }
+  
+  .card__status {
+    font-size: .8em;
+    color: #D7BDCA;
+  }
+  
+  .card__description {
+    padding: 0 2em 2em;
+    margin: 0;
+    color: #D7BDCA;
+    font-family: "MockFlowFont";   
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }    
+  */

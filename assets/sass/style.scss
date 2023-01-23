@@ -1,4 +1,3 @@
-@import"libs/responsive.scss";
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
@@ -14,6 +13,17 @@ $gradient:linear-gradient();
 $gradientRed:linear-gradient(to bottom, #ef3939 5%, #7f1454 100%);
 $fontText:"font-family: 'Quicksand', sans-serif";
 $fontTitle:"font-family: 'Righteous', cursive";
+$surface-color: #fff;
+
+@mixin Imgcurve{
+	-webkit-border-top-left-radius: 30px;
+-webkit-border-bottom-right-radius: 30px;
+-moz-border-radius-topleft: 30px;
+-moz-border-radius-bottomright: 30px;
+border-top-left-radius: 30px;
+border-bottom-right-radius: 30px;
+}
+
 
 * {
 	margin: 0;
@@ -46,9 +56,7 @@ h2 {
 div {
 	width: 100%;
 }
-img {
-	width: 100px;
-}
+
 .myBtn {
 	box-shadow: 0px 10px 14px -7px #1c8c81;
 	background: $gradient;
@@ -101,22 +109,14 @@ img {
     font-family: $fontText;
   }
 }
-.body_list {
-	float: none;
-	width: auto;
-}
-.body_text {
-	float: none;
-	width: auto;
-}
 .title {
 	color: $black;
 }
 .logo {
 	width: 125px;
-	margin: 8%;
+	margin: 2%;
 	display: block;
-	padding: 15px;
+	padding: 5px;
 	box-shadow: 5px 5px 20px $grey;
 }
 .button {
@@ -133,6 +133,30 @@ img {
 }
 .hidden{
   display: none;
+}
+.book_list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 4rem 5vw;
+  padding: 0;
+  list-style: none;
+  border: solid 1px black;
+  		li{
+			list-style: none;	 
+  }
+  h3.book_title{
+	font-family: Arial, Helvetica, sans-serif;
+  }
+  
+}
+.card {
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	text-decoration: none;
+	list-style: none;
+
 }
 
 
