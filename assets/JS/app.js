@@ -101,7 +101,7 @@ async function searchBook(){
 
   const outputList = document.querySelector("#content");
   const container =
-    `<div>
+    `<div id="search_container">
     <h2>Résultat de recherche</h2>
     
     <div id="searchResults" ? >
@@ -137,19 +137,32 @@ function renderBook(book) {
   console.log("ici mon placeholer  :" + placeHldr.src)
   var bookCover = book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : placeHldr.src;
   console.log("Mon book Cover ici : "+ bookCover);
-  
+  var desc = "Information manquante";
+  var author = "auteur non renseigné";
+  console.log(book);
+
+  var description = book.volumeInfo?.description? book.volumeInfo.description : desc;
+  var authors = book.volumeInfo?.authors? book.volumeInfo.authors : author;
   elementBook.insertAdjacentHTML('beforeend', `
+  <div class="book_details">
   <h3 class="book_title">${book.volumeInfo.title}</h3>
-  <p class="book_author">${book.volumeInfo.authors}</p>
-  <p class="book_id">${book.id}</p>
+  <p class="book_author">${authors}</p>
+  <p class="book_id"> Id : ${book.id}</p>
+  </div>
   <img class="book_cover"src="${bookCover}" alt="book cover">
-  <span class="book_description">${book.volumeInfo.description}</span>
+  <div class="overlay">
+  <span class="book_description">${description}</span>
+  </div>
   `);
     var parent = document.getElementById('book_list');
     parent.insertAdjacentElement('beforeend', elementBook);
+
+  // container = document.getElementById('serach_container');
+  //  container.insertAdjacentElement('beforeend',parent);
     
   
   }
+ 
   
 
 searchBookBtn.addEventListener('submit', searchBook);
