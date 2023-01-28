@@ -91,6 +91,8 @@ function showSearchBookForm() {
 
 
 async function searchBook(){
+  const outputList = document.querySelector("#content");
+  outputList.innerHTML="";
   book.title = inputTitle.value;
   book.author = inputAuthor.value;
 
@@ -99,72 +101,96 @@ async function searchBook(){
   
  // console.log(bookList);
 
-  const outputList = document.querySelector("#content");
+  
   const container =
     `<div id="search_container">
     <h2>Résultat de recherche</h2>
     
-    <div id="searchResults" ? >
+    <div id="search_results" ? >
       <ul id="book_list" class="book_list">
       </ul>
       </div>
     `;
 
-    outputList.insertAdjacentHTML('afterbegin',container);
+    outputList.insertAdjacentHTML('beforeend',container);
 
   for(const book of bookList.items){
     renderBook(book)
   }
-
+showSearchBookForm();
 }
-
-
-function addElement() {
-var element = document.createElement('li');
-element.classList.add("book_item");
-var parent = document.getElementById('book_list');
-parent.insertAdjacentHTML('afterbegin', element);
+function clearElements(){
+  const outputList = document.querySelector("#search_results");
+  outputList.innerHTML ="";
 }
-
 
 function renderBook(book) {
+  
   const elementBook = document.createElement('li');
   elementBook.classList.add('card');
   var placeHldr = document.createElement('img');
   
   //je crée la variable qui va contenir l'image par defaut ici
   placeHldr.setAttribute("src", "/assets/img/unavailable.png");
-  console.log("ici mon placeholer  :" + placeHldr.src)
   var bookCover = book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : placeHldr.src;
-  console.log("Mon book Cover ici : "+ bookCover);
   var desc = "Information manquante";
   var author = "auteur non renseigné";
-  console.log(book);
-
   var description = book.volumeInfo?.description? book.volumeInfo.description : desc;
   var authors = book.volumeInfo?.authors? book.volumeInfo.authors : author;
   elementBook.insertAdjacentHTML('beforeend', `
-  <div class="book_details">
-  <h3 class="book_title">${book.volumeInfo.title}</h3>
-  <p class="book_author">${authors}</p>
-  <p class="book_id"> Id : ${book.id}</p>
-  <i class="fa-solid fa-bookmark"></i>
-  </div>
-  <img class="book_cover"src="${bookCover}" alt="book cover">
-  <div class="overlay">
-  <span class="book_description">${description}</span>
   
+  <div class="book_details" style="background-image: url('${bookCover}');">
+  <div class="book_header">
+     <h3 class="book_title">${book.volumeInfo.title}</h3>
+     <p class="book_author">${authors}</p>
+     <p class="book_id"> Id : ${book.id}</p>
+         <button class="bookmark" onclick="addToPochlist()">
+             <i onclick="addToPochlist() id="bookmark" class="fa-solid fa-bookmark bookmark" ></i>
+        </button>
   </div>
+       
+      
+        <div class="overlay">
+           <span class="book_description">${description}</span>
+       </div>
   `);
     var parent = document.getElementById('book_list');
     parent.insertAdjacentElement('beforeend', elementBook);
-
+  
   // container = document.getElementById('serach_container');
   //  container.insertAdjacentElement('beforeend',parent);
     
   
   }
- 
-  
+  function addElement(parent, tag, attributes) {
+    var element = document.createElement(tag);
+    // Affecter les attributs au nouvel élément à créer
+    for (key of Object.keys(attributes)) {
+      element[key] = attributes[key];
+    }
+    var parent = document.getElementById(parent)|| parent; //trouver sur ggole mais pq ?
+    parent.appendChild(element);
+
+    return element;
+
+  }
+
+
+
 
 searchBookBtn.addEventListener('submit', searchBook);
+
+const panels = document.querySelectorAll('.panel');
+
+panels.forEach(panel => {
+    panel.addEventListener('click', () => {
+        removeActiveClasses();
+        panel.classList.add('active');
+    })
+})
+
+function removeActiveClasses(){
+    panels.forEach(panel => {
+        panel.classList.remove('active');
+    })
+}

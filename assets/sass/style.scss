@@ -9,7 +9,7 @@ $lightGrey:#C4C4C4;
 $grey:#6F6E77;
 $black:#0D0D0D;
 $padding:2em;
-$gradient:linear-gradient();
+$gradient:linear-gradient(to bottom, #1c8c81 5%, #2bd9b9 100%);
 $gradientRed:linear-gradient(to bottom, #ef3939 5%, #7f1454 100%);
 $fontText:"font-family: 'Quicksand', sans-serif";
 $fontTitle:"font-family: 'Righteous', cursive";
@@ -74,13 +74,13 @@ div {
 	text-shadow: 0px 1px 0px #269fa3;
   min-width: 150px;
   max-width: 300px;
-  margin: 1em 0;
+  margin: .3em 0;
 	&:hover {
 		background: $gradient;
 		background-color: #199e83;
 	}
   &#cancel{
-    box-shadow: 0px 10px 14px -7px #1c8c81;
+    box-shadow: 0px 10px 14px -7px #d62f48;
 	background: $gradientRed;
 	background-color: #da2736;
 	border: 1px solid #c41932;
@@ -135,28 +135,114 @@ div {
   display: none;
 }
 .book_list{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 4rem 5vw;
-  padding: 0;
+  /*display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+  gap: 2rem;*/
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80vw;
+  margin: 2rem 5vw;
+  padding: 1em;
   list-style: none;
-  border: solid 1px black;
+  overflow-x: scroll;
+  flex-direction: row;
   		li{
-			list-style: none;	 
+			list-style: none;	
+			min-width: 15em; 
   }
   h3.book_title{
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: $fontTitle;
+	background-color: #15DEA5;
+	min-height: 4em;
+	display: flex;
+	align-items: center;
+	padding: 0.5em;
+	width: 90%;
+  }
+  p.book_id, p.book_author{
+	font-family: $fontText;
+	background-color: #15DEA5;
+  }
+  button{
+	font-size: 1.5em;
   }
   
 }
 .card {
-	display: block;
-	height: 100%;
+	display: flex;
+  margin: 1em;
+  padding: 0;
+  border-radius: 20px;
 	overflow: hidden;
 	text-decoration: none;
 	list-style: none;
+	background-color: $primary;
+	box-shadow: 0px 10px 14px -7px #3b3b3b;    
+    transition: width 0.5s ease-in;
+    color:#fff;
+    cursor:pointer;
+    margin:10px;
+	.book_details{
+		display: flex;
+		    transition: width 0.5s ease-in;
+    align-items: flex-start;
+    justify-content: stretch;
+    flex-direction: column;
+	background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height:50vh;
+	position:relative;
+	& >*{
+		display: flex;
+		flex-direction: column;
+	}
+	&.active,
+  	&:hover{
+	  flex:1.5;
+  }
 
+  &.active h3{
+	  opacity:1;
+	   transition: opacity 0.4s ease-in 0.4s;
+	   width: 90%;
+	   
+  }
+	}
+	.book_cover{
+		width: 100%;
+	}
+	
+		&:hover {
+			
+ 		 flex: 5;
+		}
+  
+  
+}
+.overlay{
+	opacity: 0;
+	background-color: $primary;
+	color: #0D0D0D;
+	height: 100%;
+	transition: opacity 0.4s ease-in 0.4s;
+			&:hover {
+					opacity: 1;
 }
 
+}
+.book_header{
+	position: relative;
+	background-color: #15DEA5;
+}
+.bookmark{
+	position: absolute;
+    right: .5em;
+    top: .5em;
+}
 
+.search_results {
+	display: flex;
+}
