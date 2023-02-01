@@ -150,7 +150,7 @@ div {
   flex-direction: row;
   		li{
 			list-style: none;	
-			min-width: 15em; 
+			min-width: 20em; 
   }
   h3.book_title{
 	font-family: $fontTitle;
@@ -174,7 +174,7 @@ div {
 	display: flex;
   margin: 1em;
   padding: 0;
-  border-radius: 20px;
+
 	overflow: hidden;
 	text-decoration: none;
 	list-style: none;
@@ -236,11 +236,25 @@ div {
 .book_header{
 	position: relative;
 	background-color: #15DEA5;
+	input{
+		z-index: 1;
+		border: none;
+		background-color: transparent;
+		&:checked,
+		&:active{
+				color: #15DEA5;
+		}
+	}
+	i{
+		height: 3em;
+	}
 }
 .bookmark{
 	position: absolute;
     right: .5em;
     top: .5em;
+	
+	//opacity: .5;
 }
 
 .search_results {

@@ -48,7 +48,7 @@ function showSearchBookForm() {
     inputAuthor.setAttribute("type", "text");
     inputAuthor.setAttribute("name", "author");
     inputAuthor.setAttribute("placeholder", "Auteur");
-    inputTitle.id ='author';
+    inputAuthor.id ='author';
 
 
     // création du bouton de rechérche
@@ -97,7 +97,7 @@ async function searchBook(){
   book.author = inputAuthor.value;
 
   const url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
-  const bookList = await fetch(url).then((response) => response.json());
+  bookList = await fetch(url).then((response) => response.json());
   
  // console.log(bookList);
 
@@ -113,21 +113,51 @@ async function searchBook(){
     `;
 
     outputList.insertAdjacentHTML('beforeend',container);
-
+    if (bookList.totalItems > 0) {
   for(const book of bookList.items){
     renderBook(book)
+  }} else {
+    var noResult = document.createElement('div');
+    noResult.innerHTML= "Aucun livre n'a été trouvé";
+    outputList.insertAdjacentElement('beforeend',noResult)
+    };
+    showSearchBookForm();
   }
-showSearchBookForm();
+
+
+async function bookSearch(){
+  const outputList = document.querySelector("#content");
+  outputList.innerHTML="";
+  book.title = inputTitle.value;
+  book.author = inputAuthor.value;
+
+  let googleBookAPIURL =
+  "https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
+
+  // console.log(googleBookAPIURL);
+
+  // 2. Lancer la requête
+  $.ajax({
+    url: googleBookAPIURL.toString(),
+    dataType: "jsonp",
+    crossDomain: true,
+    success: function (data) {
+      // 3. Récupérer les résultats
+      displaySearchResults(data);
+    },
+  });
 }
+
+
 function clearElements(){
   const outputList = document.querySelector("#search_results");
   outputList.innerHTML ="";
 }
+const elementBook = document.createElement('li');
+elementBook.classList.add('card');
 
-function renderBook(book) {
-  
-  const elementBook = document.createElement('li');
-  elementBook.classList.add('card');
+function renderBook(book,renderDiv) {
+ 
   var placeHldr = document.createElement('img');
   
   //je crée la variable qui va contenir l'image par defaut ici
@@ -144,9 +174,7 @@ function renderBook(book) {
      <h3 class="book_title">${book.volumeInfo.title}</h3>
      <p class="book_author">${authors}</p>
      <p class="book_id"> Id : ${book.id}</p>
-         <button class="bookmark" onclick="addToPochlist()">
-             <i onclick="addToPochlist() id="bookmark" class="fa-solid fa-bookmark bookmark" ></i>
-        </button>
+             <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
   </div>
        
       
@@ -154,28 +182,41 @@ function renderBook(book) {
            <span class="book_description">${description}</span>
        </div>
   `);
-    var parent = document.getElementById('book_list');
+    var parent = document.getElementById(renderDiv||'book_list'); //container si rien booklist sinon le @
+   
     parent.insertAdjacentElement('beforeend', elementBook);
-  
-  // container = document.getElementById('serach_container');
-  //  container.insertAdjacentElement('beforeend',parent);
+    document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
+    console.log(document.getElementById(`bookmark_${book.id}`));
+  }
+
+
+
+
+function addToPochlist(book){
+  console.log("dans addtopchl "+ book);
+  document.getElementById(`bookmark_${book.id}`).style.color = "red";
+  var pochlist =[];
+  pochlist.push(book);
+  console.log(pochlist);
+
+//recup livre envoyer dans pochlist
+//pochlist = session storage
+//1. recup session storage 'si existe on recup sinon on crée un session storage'
+//2.boucler sur pochlist et voir si le livre existe deja dans pochlist si oui on msg "livre deja ajouté"
+//3. ajouter le book dans [] et le renvoyer 
+          }     
+        
+    
+    
     
   
-  }
-  function addElement(parent, tag, attributes) {
-    var element = document.createElement(tag);
-    // Affecter les attributs au nouvel élément à créer
-    for (key of Object.keys(attributes)) {
-      element[key] = attributes[key];
-    }
-    var parent = document.getElementById(parent)|| parent; //trouver sur ggole mais pq ?
-    parent.appendChild(element);
-
-    return element;
-
-  }
-
-
+  
+  
+    
+         
+    
+    
+    
 
 
 searchBookBtn.addEventListener('submit', searchBook);

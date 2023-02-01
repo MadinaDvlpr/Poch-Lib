@@ -137,7 +137,7 @@ div {
 }
 .book_list li {
   list-style: none;
-  min-width: 15em;
+  min-width: 20em;
 }
 .book_list h3.book_title {
   font-family: "font-family: 'Righteous', cursive";
@@ -160,7 +160,6 @@ div {
   display: flex;
   margin: 1em;
   padding: 0;
-  border-radius: 20px;
   overflow: hidden;
   text-decoration: none;
   list-style: none;
@@ -216,6 +215,17 @@ div {
 .book_header {
   position: relative;
   background-color: #15DEA5;
+}
+.book_header input {
+  z-index: 1;
+  border: none;
+  background-color: transparent;
+}
+.book_header input:checked, .book_header input:active {
+  color: #15DEA5;
+}
+.book_header i {
+  height: 3em;
 }
 
 .bookmark {
