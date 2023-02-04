@@ -137,7 +137,8 @@ div {
 }
 .book_list li {
   list-style: none;
-  min-width: 20em;
+  min-width: 130em;
+  gap: 1em;
 }
 .book_list h3.book_title {
   font-family: "font-family: 'Righteous', cursive";
@@ -145,7 +146,6 @@ div {
   min-height: 4em;
   display: flex;
   align-items: center;
-  padding: 0.5em;
   width: 90%;
 }
 .book_list p.book_id, .book_list p.book_author {
@@ -160,6 +160,7 @@ div {
   display: flex;
   margin: 1em;
   padding: 0;
+  max-width: 20%;
   overflow: hidden;
   text-decoration: none;
   list-style: none;
@@ -180,11 +181,11 @@ div {
   background-position: center;
   background-repeat: no-repeat;
   height: 50vh;
-  position: relative;
 }
 .card .book_details > * {
   display: flex;
   flex-direction: column;
+  padding: 1em;
 }
 .card .book_details.active, .card .book_details:hover {
   flex: 1.5;
@@ -213,7 +214,6 @@ div {
 }
 
 .book_header {
-  position: relative;
   background-color: #15DEA5;
 }
 .book_header input {
@@ -229,9 +229,7 @@ div {
 }
 
 .bookmark {
-  position: absolute;
-  right: 0.5em;
-  top: 0.5em;
+  color: #F2F2F2;
 }
 
 .search_results {

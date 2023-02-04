@@ -149,8 +149,10 @@ div {
   overflow-x: scroll;
   flex-direction: row;
   		li{
-			list-style: none;	
-			min-width: 20em; 
+			list-style: none;
+    min-width: 130em;
+    gap: 1em;
+
   }
   h3.book_title{
 	font-family: $fontTitle;
@@ -158,7 +160,6 @@ div {
 	min-height: 4em;
 	display: flex;
 	align-items: center;
-	padding: 0.5em;
 	width: 90%;
   }
   p.book_id, p.book_author{
@@ -174,7 +175,7 @@ div {
 	display: flex;
   margin: 1em;
   padding: 0;
-
+max-width: 20%;
 	overflow: hidden;
 	text-decoration: none;
 	list-style: none;
@@ -194,10 +195,10 @@ div {
     background-position: center;
     background-repeat: no-repeat;
     height:50vh;
-	position:relative;
 	& >*{
 		display: flex;
 		flex-direction: column;
+		padding: 1em
 	}
 	&.active,
   	&:hover{
@@ -234,7 +235,6 @@ div {
 
 }
 .book_header{
-	position: relative;
 	background-color: #15DEA5;
 	input{
 		z-index: 1;
@@ -250,10 +250,7 @@ div {
 	}
 }
 .bookmark{
-	position: absolute;
-    right: .5em;
-    top: .5em;
-	
+    color: $primary;
 	//opacity: .5;
 }
 

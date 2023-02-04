@@ -6,28 +6,43 @@ var deleteBtn = document.createElement("button");
 var searchBookBtn = document.createElement("button");
 var inputTitle = document.createElement("input");
 var inputAuthor = document.createElement("input");
+searchBookBtn.addEventListener('submit', searchBook);
 var book ={
-            title : "",
-            author : "",
-            id :"",
-            description:"",
-            img: ""
-          };
-
+  title : "",
+  author : "",
+  id :"",
+  description:"",
+  img: ""
+};
 var bookList =[];
+const container =
+    `<div id="search_container">
+    <h2>Résultat de recherche</h2>
+    
+    <div id="search_results" ? >
+      <ul id="book_list" class="book_list">
+      </ul>
+      </div>
+    `;
 content.appendChild(btnAdd);
 btnAdd.addEventListener('click', showSearchBookForm);
-
-
+const elementBook = document.createElement('li');
+elementBook.classList.add('card');
+var renderDiv;
 function showSearchBookForm() {
     // retrait du bouton ajouter un livre
     btnAdd.classList.add('hidden');
-
+ // Création de la div search results
+ var searchContainer = document.createElement("div");
+ searchContainer.id ='search_container';
+ searchContainer.classList.add('hidden');
     //création de la div pour le formulaire
-    const formSection = document.createElement("div");
-    formSection.classList.add('modal');
-    formSection.innerHTML = "Rechercher un livre";
-
+    const formSection = addElement(parent, "div", {
+      class:"modal",
+      innerHTML: "Rechercher un livre",
+    });
+    //création de la div pour les resultats de recherche
+    
     //creation du formulaire
     const form = document.createElement("form")
     form.classList.add('search_form');
@@ -77,7 +92,8 @@ function showSearchBookForm() {
 
     // ajout du formulaire à la div
     formSection.appendChild(form);
-
+    formSection.insertAdjacentHTML('beforebegin', container);
+   
     // Ajouter de la div dans le document
     content.appendChild(formSection);
     searchBookBtn.addEventListener('click', (e) => {
@@ -102,15 +118,7 @@ async function searchBook(){
  // console.log(bookList);
 
   
-  const container =
-    `<div id="search_container">
-    <h2>Résultat de recherche</h2>
-    
-    <div id="search_results" ? >
-      <ul id="book_list" class="book_list">
-      </ul>
-      </div>
-    `;
+  
 
     outputList.insertAdjacentHTML('beforeend',container);
     if (bookList.totalItems > 0) {
@@ -125,39 +133,28 @@ async function searchBook(){
   }
 
 
-async function bookSearch(){
-  const outputList = document.querySelector("#content");
-  outputList.innerHTML="";
-  book.title = inputTitle.value;
-  book.author = inputAuthor.value;
 
-  let googleBookAPIURL =
-  "https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
-
-  // console.log(googleBookAPIURL);
-
-  // 2. Lancer la requête
-  $.ajax({
-    url: googleBookAPIURL.toString(),
-    dataType: "jsonp",
-    crossDomain: true,
-    success: function (data) {
-      // 3. Récupérer les résultats
-      displaySearchResults(data);
-    },
-  });
-}
 
 
 function clearElements(){
   const outputList = document.querySelector("#search_results");
   outputList.innerHTML ="";
 }
-const elementBook = document.createElement('li');
-elementBook.classList.add('card');
 
-function renderBook(book,renderDiv) {
- 
+function addElement(parent,tag, attributes){
+  var element = document.createElement(tag);
+  // pour affecter des attributs au nouvel élément àcrée
+  //The Object.keys() static method returns an array of a given object's own enumerable string-keyed property names.
+  for (key of Object.keys(attributes)) {
+    element[key] = attributes[key];
+}
+// pour ajouter l'élément crée dans son parent 
+var parent = renderDiv || document.getElementById('content');
+  parent.appendChild(element);
+ // element.appendTo(parent);
+  return element;
+}
+function createBook(book){
   var placeHldr = document.createElement('img');
   
   //je crée la variable qui va contenir l'image par defaut ici
@@ -167,11 +164,12 @@ function renderBook(book,renderDiv) {
   var author = "auteur non renseigné";
   var description = book.volumeInfo?.description? book.volumeInfo.description : desc;
   var authors = book.volumeInfo?.authors? book.volumeInfo.authors : author;
+  var bookTitle = book.volumeInfo?.title? book.volumeInfo.title : book.title;
   elementBook.insertAdjacentHTML('beforeend', `
   
   <div class="book_details" style="background-image: url('${bookCover}');">
   <div class="book_header">
-     <h3 class="book_title">${book.volumeInfo.title}</h3>
+     <h3 class="book_title">${bookTitle}</h3>
      <p class="book_author">${authors}</p>
      <p class="book_id"> Id : ${book.id}</p>
              <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
@@ -182,34 +180,88 @@ function renderBook(book,renderDiv) {
            <span class="book_description">${description}</span>
        </div>
   `);
-    var parent = document.getElementById(renderDiv||'book_list'); //container si rien booklist sinon le @
-   
+  var parent = renderDiv|| document.getElementById('book_list'); //container si rien booklist sinon le @
     parent.insertAdjacentElement('beforeend', elementBook);
+    return parent;
+}
+function renderBook(book,renderDiv) {
+ createBook(book);
     document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
-    console.log(document.getElementById(`bookmark_${book.id}`));
   }
 
+function addToPochlist(book, checkIfExisting){
+  console.log("dans addtopchl "+ JSON.stringify(book.id));
+  console.log("dans addtopch2 "+ book.id);
 
-
-
-function addToPochlist(book){
-  console.log("dans addtopchl "+ book);
   document.getElementById(`bookmark_${book.id}`).style.color = "red";
-  var pochlist =[];
-  pochlist.push(book);
-  console.log(pochlist);
+  console.log(document.getElementById(`bookmark_${book.id}`));
+ // createBook(JSON.stringify(book));
+ 
+ console.log('ajouté à la poche liste : '+ book.volumeInfo.title);
+ 
 
+ //1. recup session storage 
+ var bookInStorage = sessionStorage.getItem("pochlist");
+ var bookExists = false;
+
+ if (checkIfExisting) {
+  
+   if (bookInStorage) {
+     const booksInSession = bookInStorage.split("|");
+     const existingBooksInSession = booksInSession.filter(
+       (currentBookJsonEncoded) =>
+         (JSON.parse(currentBookJsonEncoded) || {}).id === book.id
+     );
+     if (existingBooksInSession.length) {
+       // Vérifier que book pas déjà dans session
+       bookExists = true;
+     }
+   }
+ }
+    
+  // Si pas déjà présent ==> ajouter au SS
+  if (!bookExists) {
+    // Ajouter au session storage
+    const bookData = JSON.stringify(book);
+    if (bookInStorage) {
+      bookInStorage += bookData;
+    } else {
+      bookInStorage = bookData;
+    }
+//on crée un session storage' si existe pas et on y met le book
+    sessionStorage.setItem("pochlist", bookInStorage);
+  }
+  bookInStorage = sessionStorage.getItem("pochlist");
+ // bookInStorage.forEach(book => {
+createBook(book);
+
+ // });    
+ console.log('la poche liste : '+ JSON.stringify(bookInStorage));          
+}
 //recup livre envoyer dans pochlist
 //pochlist = session storage
-//1. recup session storage 'si existe on recup sinon on crée un session storage'
+
 //2.boucler sur pochlist et voir si le livre existe deja dans pochlist si oui on msg "livre deja ajouté"
 //3. ajouter le book dans [] et le renvoyer 
-          }     
-        
     
     
     
-  
+function getPochlistFromStorage() {
+  const pochlist = sessionStorage.getItem("pochlist");
+  if (pochlist) {
+    // Si des livres sont présents dans la session storage
+    // Format "bookID1, bookID2"
+    const myPochList = pochlist.split("|");
+
+    // Charger la poch list
+    for (const bookStored of myPochList) {
+      if (bookStored) {
+        const bookParse = JSON.parse(bookStored);
+        addToPochlist(bookParse, true);
+      }
+    }
+  }
+}
   
   
     
@@ -219,7 +271,6 @@ function addToPochlist(book){
     
 
 
-searchBookBtn.addEventListener('submit', searchBook);
 
 const panels = document.querySelectorAll('.panel');
 
