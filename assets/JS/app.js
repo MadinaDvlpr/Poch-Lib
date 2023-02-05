@@ -190,30 +190,27 @@ function renderBook(book,renderDiv) {
   }
 
 function addToPochlist(book, checkIfExisting){
-  console.log("dans addtopchl "+ JSON.stringify(book.id));
-  console.log("dans addtopch2 "+ book.id);
+ 
 
   document.getElementById(`bookmark_${book.id}`).style.color = "red";
-  console.log(document.getElementById(`bookmark_${book.id}`));
+  //console.log(document.getElementById(`bookmark_${book.id}`));
  // createBook(JSON.stringify(book));
  
  console.log('ajouté à la poche liste : '+ book.volumeInfo.title);
  
 
  //1. recup session storage 
- var bookInStorage = sessionStorage.getItem("pochlist");
+ var bookInStorage = localStorage.getItem("pochlist");
  var bookExists = false;
 
  if (checkIfExisting) {
   
    if (bookInStorage) {
-     const booksInSession = bookInStorage.split("|");
-     const existingBooksInSession = booksInSession.filter(
-       (currentBookJsonEncoded) =>
-         (JSON.parse(currentBookJsonEncoded) || {}).id === book.id
-     );
-     if (existingBooksInSession.length) {
+     const booksInSession = JSON.parse(bookInStorage);
+     const existingBooks = booksInSession.find((currentBook)=>currentBook.id == book.id)
+     if (existingBooks) {
        // Vérifier que book pas déjà dans session
+      //Si present bookexist true
        bookExists = true;
      }
    }
@@ -221,19 +218,21 @@ function addToPochlist(book, checkIfExisting){
     
   // Si pas déjà présent ==> ajouter au SS
   if (!bookExists) {
+    console.log(bookInStorage)
     // Ajouter au session storage
-    const bookData = JSON.stringify(book);
     if (bookInStorage) {
-      bookInStorage += bookData;
+   
+      bookInStorage.push(book)
+
+
     } else {
-      bookInStorage = bookData;
+      bookInStorage = [book];
     }
-//on crée un session storage' si existe pas et on y met le book
-    sessionStorage.setItem("pochlist", bookInStorage);
+//on crée un session storage si existe pas et on y met le book
+    localStorage.setItem("pochlist", JSON.stringify(bookInStorage));
   }
-  bookInStorage = sessionStorage.getItem("pochlist");
  // bookInStorage.forEach(book => {
-createBook(book);
+//createBook(book);
 
  // });    
  console.log('la poche liste : '+ JSON.stringify(bookInStorage));          
@@ -247,7 +246,7 @@ createBook(book);
     
     
 function getPochlistFromStorage() {
-  const pochlist = sessionStorage.getItem("pochlist");
+  const pochlist = localStorage.getItem("pochlist");
   if (pochlist) {
     // Si des livres sont présents dans la session storage
     // Format "bookID1, bookID2"
