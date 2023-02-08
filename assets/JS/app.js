@@ -16,25 +16,30 @@ var book ={
 };
 var bookList =[];
 const container =
-    `<div id="search_container">
+    `<div id="book_container">
     <h2>Résultat de recherche</h2>
     
-    <div id="search_results" ? >
+    <div id="search_results" >
       <ul id="book_list" class="book_list">
       </ul>
-      </div>
+    </div>
+    <div id="pochlist_container">
+    <h2>Ma pochlist</h2>
+    
+    <div id="mypochlist" >
+      <ul id="pochlist" class="book_list">
+      </ul>
+    </div>
     `;
 content.appendChild(btnAdd);
 btnAdd.addEventListener('click', showSearchBookForm);
-const elementBook = document.createElement('li');
-elementBook.classList.add('card');
 var renderDiv;
 function showSearchBookForm() {
     // retrait du bouton ajouter un livre
     btnAdd.classList.add('hidden');
  // Création de la div search results
  var searchContainer = document.createElement("div");
- searchContainer.id ='search_container';
+ searchContainer.id ='book_container';
  searchContainer.classList.add('hidden');
     //création de la div pour le formulaire
     const formSection = addElement(parent, "div", {
@@ -129,7 +134,6 @@ async function searchBook(){
     noResult.innerHTML= "Aucun livre n'a été trouvé";
     outputList.insertAdjacentElement('beforeend',noResult)
     };
-    showSearchBookForm();
   }
 
 
@@ -154,7 +158,7 @@ var parent = renderDiv || document.getElementById('content');
  // element.appendTo(parent);
   return element;
 }
-function createBook(book){
+function createBook(book, renderDiv){
   var placeHldr = document.createElement('img');
   
   //je crée la variable qui va contenir l'image par defaut ici
@@ -165,6 +169,10 @@ function createBook(book){
   var description = book.volumeInfo?.description? book.volumeInfo.description : desc;
   var authors = book.volumeInfo?.authors? book.volumeInfo.authors : author;
   var bookTitle = book.volumeInfo?.title? book.volumeInfo.title : book.title;
+
+  const elementBook = document.createElement('li');
+  elementBook.classList.add('card');
+
   elementBook.insertAdjacentHTML('beforeend', `
   
   <div class="book_details" style="background-image: url('${bookCover}');">
@@ -184,59 +192,48 @@ function createBook(book){
     parent.insertAdjacentElement('beforeend', elementBook);
     return parent;
 }
-function renderBook(book,renderDiv) {
- createBook(book);
-    document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
-  }
-
-function addToPochlist(book, checkIfExisting){
- 
-
-  document.getElementById(`bookmark_${book.id}`).style.color = "red";
-  //console.log(document.getElementById(`bookmark_${book.id}`));
- // createBook(JSON.stringify(book));
- 
- console.log('ajouté à la poche liste : '+ book.volumeInfo.title);
- 
-
- //1. recup session storage 
- var bookInStorage = localStorage.getItem("pochlist");
- var bookExists = false;
-
- if (checkIfExisting) {
-  
-   if (bookInStorage) {
-     const booksInSession = JSON.parse(bookInStorage);
-     const existingBooks = booksInSession.find((currentBook)=>currentBook.id == book.id)
-     if (existingBooks) {
-       // Vérifier que book pas déjà dans session
-      //Si present bookexist true
-       bookExists = true;
-     }
-   }
- }
-    
-  // Si pas déjà présent ==> ajouter au SS
-  if (!bookExists) {
-    console.log(bookInStorage)
-    // Ajouter au session storage
-    if (bookInStorage) {
-   
-      bookInStorage.push(book)
-
-
-    } else {
-      bookInStorage = [book];
-    }
-//on crée un session storage si existe pas et on y met le book
-    localStorage.setItem("pochlist", JSON.stringify(bookInStorage));
-  }
- // bookInStorage.forEach(book => {
-//createBook(book);
-
- // });    
- console.log('la poche liste : '+ JSON.stringify(bookInStorage));          
+function renderBook(book, renderDiv) {
+  createBook(book, renderDiv);
+  document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
 }
+
+function addToPochlist(book){
+  let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
+
+  if (bookInStorage) {
+    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
+    if (!existingBooks){
+      document.getElementById(`bookmark_${book.id}`).style.color = "red";
+      bookInStorage.push(book);
+    }
+    else{
+      document.getElementById(`bookmark_${book.id}`).style.color = "white";
+      bookInStorage = bookInStorage.filter(currentBook => currentBook.id !== book.id);
+    }
+  }else{
+    bookInStorage = [book];
+  }
+
+  renderPochList(bookInStorage);
+
+  sessionStorage.setItem("pochlist", JSON.stringify(bookInStorage));        
+}
+
+
+
+
+function renderPochList(pochlist){
+  const pochlistDiv = document.getElementById('pochlist');
+
+  pochlistDiv.innerHTML = '';
+  
+  for(let book of pochlist){
+    renderBook(book, pochlistDiv);
+  }
+}
+
+
+
 //recup livre envoyer dans pochlist
 //pochlist = session storage
 
@@ -244,9 +241,9 @@ function addToPochlist(book, checkIfExisting){
 //3. ajouter le book dans [] et le renvoyer 
     
     
-    
+
 function getPochlistFromStorage() {
-  const pochlist = localStorage.getItem("pochlist");
+  const pochlist = sessionStorage.getItem("pochlist");
   if (pochlist) {
     // Si des livres sont présents dans la session storage
     // Format "bookID1, bookID2"

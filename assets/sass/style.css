@@ -121,26 +121,18 @@ div {
 }
 
 .book_list {
-  /*display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
-  gap: 2rem;*/
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: flex-start;
-  width: 80vw;
-  margin: 2rem 5vw;
-  padding: 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+  gap: 2rem;
   list-style: none;
-  overflow-x: scroll;
-  flex-direction: row;
 }
 .book_list li {
   list-style: none;
-  min-width: 130em;
-  gap: 1em;
+  min-width: 30em;
+  max-width: 40%;
 }
-.book_list h3.book_title {
+
+h3.book_title {
   font-family: "font-family: 'Righteous', cursive";
   background-color: #15DEA5;
   min-height: 4em;
@@ -148,11 +140,13 @@ div {
   align-items: center;
   width: 90%;
 }
-.book_list p.book_id, .book_list p.book_author {
+
+p.book_id, p.book_author {
   font-family: "font-family: 'Quicksand', sans-serif";
   background-color: #15DEA5;
 }
-.book_list button {
+
+button {
   font-size: 1.5em;
 }
 
@@ -160,8 +154,6 @@ div {
   display: flex;
   margin: 1em;
   padding: 0;
-  max-width: 20%;
-  overflow: hidden;
   text-decoration: none;
   list-style: none;
   background-color: #F2F2F2;
