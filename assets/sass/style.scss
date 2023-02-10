@@ -185,7 +185,8 @@ div {
 	font-size: 1.5em;
   }
   
-  .card {  display: grid;
+  .card {  
+	display: grid;
 	grid-template-columns: 3fr  1fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 	gap: 0px 0px;
@@ -200,7 +201,7 @@ div {
   
   .book_title { grid-area: book_title; }
   
-  .bookmark { grid-area: bookmark; }
+  .book_mark { grid-area: bookmark; }
   
   .book_authors { grid-area: book_authors; }
   

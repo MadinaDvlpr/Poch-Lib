@@ -195,7 +195,7 @@ function createBook(book, renderDiv){
            <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
      </div>
        <div class="book_description">
-           <span class="escription" >${description}</span>
+           <span class="description" >${description}</span>
        </div>
       
         <div class="book_cover">
