@@ -175,6 +175,7 @@ function createBook(book, renderDiv){
   var desc = "Information manquante";
   var author = "auteur non renseigné";
   var description = book.volumeInfo?.description? book.volumeInfo.description : desc;
+  description = truncate(description, 200);
   var authors = book.volumeInfo?.authors? book.volumeInfo.authors : author;
   var bookTitle = book.volumeInfo?.title? book.volumeInfo.title : book.title;
 
@@ -183,19 +184,26 @@ function createBook(book, renderDiv){
 
   elementBook.insertAdjacentHTML('beforeend', `
   
-  <div class="book_details" style="background-image: url('${bookCover}');">
   <div class="book_header">
+  <div class="book_details">
      <h3 class="book_title">${bookTitle}</h3>
-     <p class="book_author">${authors}</p>
+     <p class="book_authors">${authors}</p>
      <p class="book_id"> Id : ${book.id}</p>
-             <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
-  </div>
-       
-      
-        <div class="overlay">
-           <span class="book_description">${description}</span>
+     </div>
+     
+     <div class="book_mark">
+           <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
+     </div>
+       <div class="book_description">
+           <span class="escription" >${description}</span>
        </div>
+      
+        <div class="book_cover">
+            <img src="${bookCover}" alt="">
+        </div>
+
   `);
+  
   var parent = renderDiv|| document.getElementById('book_list'); //container si rien booklist sinon le @
     parent.insertAdjacentElement('beforeend', elementBook);
     return parent;
@@ -269,7 +277,10 @@ function getPochlistFromStorage() {
   }
 }
   
- 
+function truncate(description, maxlength) {
+  return (description.length > maxlength) ?
+    description.slice(0, maxlength - 1) + '…' : description;
+}
     
          
     

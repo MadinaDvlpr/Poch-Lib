@@ -2,61 +2,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
 
-$primary:#F2F2F2;
-$highlight:#26BFA3;
-$mint: #15DEA5;
-$lightGrey:#C4C4C4;
-$grey:#6F6E77;
-$black:#0D0D0D;
-$padding:2em;
-$gradient:linear-gradient(to bottom, #1c8c81 5%, #2bd9b9 100%);
-$gradientRed:linear-gradient(to bottom, #ef3939 5%, #7f1454 100%);
-$fontText:"font-family: 'Quicksand', sans-serif";
-$fontTitle:"font-family: 'Righteous', cursive";
-$surface-color: #fff;
 
-@mixin Imgcurve{
-	-webkit-border-top-left-radius: 30px;
--webkit-border-bottom-right-radius: 30px;
--moz-border-radius-topleft: 30px;
--moz-border-radius-bottomright: 30px;
-border-top-left-radius: 30px;
-border-bottom-right-radius: 30px;
-}
 
+//reset
 
 * {
-	margin: 0;
+	box-sizing: border-box;
+	margin: O;
 	padding: 0;
-	box-sizing: border-box;
-	box-sizing: border-box;
+	font: inherit;
+	&::before {
+		box-sizing: border-box;
+	}
+	&::after {
+		box-sizing: border-box;
+	}
 }
-body {
-	font-family: $fontText;
-	display: flex;
-	min-width: 90vw;
-	min-height: 90vh;
-	padding: 3em;
-	color: $black;
-	background-color: $primary;
-}
-h1 {
-	font-family: $fontTitle;
-	font-weight: 800;
-	margin: 1em 0;
-	font-size: 1.5em;
-	margin: 1em 0;
-}
-h2 {
-	font-family: $fontTitle;
-	font-weight: 800;
-	margin: 1em 0;
-	font-size: 1.2em;
-}
-div {
-	width: 100%;
+img {
+	display: block;
+	max-width: 100%;
 }
 
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+
+/***STYLING***/ 
+/*** buttons ****/
 .myBtn {
 	box-shadow: 0px 10px 14px -7px #1c8c81;
 	background: $gradient;
@@ -87,6 +61,47 @@ div {
 	text-shadow: 0px 1px 0px #d62f48;
   }
 }
+/*** variables ****/
+$primary:#F2F2F2;
+$highlight:#26BFA3;
+$mint: #15DEA5;
+$lightGrey:#C4C4C4;
+$grey:#6F6E77;
+$black:#0D0D0D;
+$padding:2em;
+$gradient:linear-gradient(to bottom, #1c8c81 5%, #2bd9b9 100%);
+$gradientRed:linear-gradient(to bottom, #ef3939 5%, #7f1454 100%);
+$fontText:"font-family: 'Quicksand', sans-serif";
+$fontTitle:"font-family: 'Righteous', cursive";
+$surface-color: #fff;
+
+
+body {
+	font-family: $fontText;
+	/*display: flex;
+	min-width: 90vw;
+	min-height: 90vh;
+	padding: 3em;*/
+	color: $black;
+	background-color: $primary;
+}
+h1 {
+	font-family: $fontTitle;
+	font-weight: 800;
+	margin: 1em 0;
+	font-size: 1.5em;
+	margin: 1em 0;
+}
+h2 {
+	font-family: $fontTitle;
+	font-weight: 800;
+	margin: 1em 0;
+	font-size: 1.2em;
+}
+div {
+	width: 100%;
+}
+
 .modal {
 	display: flex;
   flex-direction: column;
@@ -135,24 +150,32 @@ div {
   display: none;
 }
 .book_list{
+	margin: 100px auto 0;
+	padding: 20px;
+	max-width: 1200px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
-  gap: 2rem;
+  grid-gap: 2rem;
+  justify-content: center;
+  justify-items: center;
     list-style: none;
 	li{
 		list-style: none;
-		min-width: 35em;	
-		max-width: 40%;
+		width: 100%;
+		display: flex;
+		display: flex;
+    margin: 1em;
+    list-style: none;
+    background-color: #F2F2F2;
+    box-shadow: 0px 10px 14px -7px #3b3b3b;
+    color: #fff;
+    flex-direction: column;
 	  }
 }
   		
   h3.book_title{
 	font-family: $fontTitle;
 	background-color: #15DEA5;
-	min-height: 4em;
-	display: flex;
-	align-items: center;
-	width: 90%;
   }
   p.book_id, p.book_author{
 	font-family: $fontText;
@@ -162,68 +185,35 @@ div {
 	font-size: 1.5em;
   }
   
-
-.card {
-	display: flex;
-  margin: 1em;
-  padding: 0;
-	text-decoration: none;
-	list-style: none;
-	background-color: $primary;
-	box-shadow: 0px 10px 14px -7px #3b3b3b;    
-    transition: width 0.5s ease-in;
-    color:#fff;
-    cursor:pointer;
-    margin:10px;
-	.book_details{
-		display: flex;
-		    transition: width 0.5s ease-in;
-    align-items: flex-start;
-    justify-content: stretch;
-    flex-direction: column;
-	background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height:50vh;
-	& >*{
-		display: flex;
-		flex-direction: column;
-		padding: 1em
-	}
-	&.active,
-  	&:hover{
-	  flex:1.5;
+  .card {  display: grid;
+	grid-template-columns: 3fr  1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+	  "book_title bookmark"
+	  "book_authors book_authors"
+	  "book_id book_id"
+	  "book_description book_description"
+	  "book_cover book_cover";
   }
-
-  &.active h3{
-	  opacity:1;
-	   transition: opacity 0.4s ease-in 0.4s;
-	   width: 90%;
-	   
-  }
-	}
-	.book_cover{
-		width: 100%;
-	}
-	
-		&:hover {
-			
- 		 flex: 5;
-		}
   
+  .book_title { grid-area: book_title; }
   
-}
-.overlay{
-	opacity: 0;
+  .bookmark { grid-area: bookmark; }
+  
+  .book_authors { grid-area: book_authors; }
+  
+  .book_id { grid-area: book_id; }
+  
+  .book_descrpion { grid-area: book_descrpion; }
+  
+  .book_cover { grid-area: book_cover; }
+.book_description{
 	background-color: $primary;
 	color: #0D0D0D;
-	height: 100%;
-	transition: opacity 0.4s ease-in 0.4s;
-			&:hover {
-					opacity: 1;
 }
 
-}
 .book_header{
 	background-color: #15DEA5;
 	input{
