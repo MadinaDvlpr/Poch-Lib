@@ -24,26 +24,27 @@ const searchContainer =
       </ul>
     </div>
     </div>
-    <div id="pochlist_container">
-    <h3>Ma pochlist</3>
     
+    `;
+    const pochlistContainer = 
+    `
+    <div id="pochlist_container">
     <div id="mypochlist" >
       <ul id="pochlist" class="book_list">
       </ul>
     </div>
     </div>
-    `;
-    content.insertAdjacentHTML('beforeend',container);
-    document.getElementById('search_results').classList.add('hidden');
+    `
+   
+    content.insertAdjacentHTML('beforeend', pochlistContainer)
+   //searchContainer.classList.add('hidden');
 content.appendChild(btnAdd);
 btnAdd.addEventListener('click', showSearchBookForm);
 var renderDiv;
 function showSearchBookForm() {
     // retrait du bouton ajouter un livre
     btnAdd.classList.add('hidden');
- // Création de la div search results
- var searchContainer = document.createElement("div");
- searchContainer.id ='book_container';
+
 // searchContainer.classList.add('hidden');
     //création de la div pour le formulaire
     const formSection = addElement(parent, "div", {
@@ -101,10 +102,13 @@ function showSearchBookForm() {
 
     // ajout du formulaire à la div
     formSection.appendChild(form);
-    formSection.insertAdjacentHTML('beforebegin', container);
+   // formSection.insertAdjacentHTML('beforebegin', pochlistContainer);
    
     // Ajouter de la div dans le document
-    content.appendChild(formSection);
+    content.insertAdjacentElement('afterbegin', formSection);
+
+     //insertion de la div résultats search container 
+     formSection.insertAdjacentHTML('beforeend',searchContainer);
     searchBookBtn.addEventListener('click', (e) => {
         e.preventDefault();
         //console.log(inputTitle.value);
@@ -116,7 +120,7 @@ function showSearchBookForm() {
 
 
 async function searchBook(){
-  const outputList = document.querySelector("#book_container");
+  const outputList = document.querySelector("#book_list");
   //outputList.innerHTML="";
   book.title = inputTitle.value;
   book.author = inputAuthor.value;
@@ -129,7 +133,7 @@ async function searchBook(){
   
   
 
-    outputList.insertAdjacentHTML('afterend',container);
+    outputList.insertAdjacentHTML('afterend',searchContainer);
     if (bookList.totalItems > 0) {
   for(const book of bookList.items){
     renderBook(book)
