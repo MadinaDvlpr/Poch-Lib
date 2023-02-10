@@ -128,7 +128,7 @@ div {
 }
 .book_list li {
   list-style: none;
-  min-width: 30em;
+  min-width: 35em;
   max-width: 40%;
 }
 
@@ -226,4 +226,8 @@ button {
 
 .search_results {
   display: flex;
+}
+
+.hidden {
+  opacity: 0;
 }/*# sourceMappingURL=style.css.map */

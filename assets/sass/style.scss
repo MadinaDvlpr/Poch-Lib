@@ -141,7 +141,7 @@ div {
     list-style: none;
 	li{
 		list-style: none;
-		min-width: 30em;	
+		min-width: 35em;	
 		max-width: 40%;
 	  }
 }
@@ -246,4 +246,7 @@ div {
 
 .search_results {
 	display: flex;
+}
+.hidden{
+	opacity: 0;
 }

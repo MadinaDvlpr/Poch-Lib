@@ -15,22 +15,26 @@ var book ={
   img: ""
 };
 var bookList =[];
-const container =
-    `<div id="book_container">
-    <h2>Résultat de recherche</h2>
+const searchContainer =
+    `<div id="search_container">
+    <h3>Résultat de recherche</h3>
     
     <div id="search_results" >
       <ul id="book_list" class="book_list">
       </ul>
     </div>
+    </div>
     <div id="pochlist_container">
-    <h2>Ma pochlist</h2>
+    <h3>Ma pochlist</3>
     
     <div id="mypochlist" >
       <ul id="pochlist" class="book_list">
       </ul>
     </div>
+    </div>
     `;
+    content.insertAdjacentHTML('beforeend',container);
+    document.getElementById('search_results').classList.add('hidden');
 content.appendChild(btnAdd);
 btnAdd.addEventListener('click', showSearchBookForm);
 var renderDiv;
@@ -40,7 +44,7 @@ function showSearchBookForm() {
  // Création de la div search results
  var searchContainer = document.createElement("div");
  searchContainer.id ='book_container';
- searchContainer.classList.add('hidden');
+// searchContainer.classList.add('hidden');
     //création de la div pour le formulaire
     const formSection = addElement(parent, "div", {
       class:"modal",
@@ -112,8 +116,8 @@ function showSearchBookForm() {
 
 
 async function searchBook(){
-  const outputList = document.querySelector("#content");
-  outputList.innerHTML="";
+  const outputList = document.querySelector("#book_container");
+  //outputList.innerHTML="";
   book.title = inputTitle.value;
   book.author = inputAuthor.value;
 
@@ -125,7 +129,7 @@ async function searchBook(){
   
   
 
-    outputList.insertAdjacentHTML('beforeend',container);
+    outputList.insertAdjacentHTML('afterend',container);
     if (bookList.totalItems > 0) {
   for(const book of bookList.items){
     renderBook(book)
@@ -205,7 +209,9 @@ function addToPochlist(book){
     if (!existingBooks){
       document.getElementById(`bookmark_${book.id}`).style.color = "red";
       bookInStorage.push(book);
-    }
+    }else if(existingBooks){
+      alert(" Vous ne pouvez ajouter deux fois le même livre");
+     }
     else{
       document.getElementById(`bookmark_${book.id}`).style.color = "white";
       bookInStorage = bookInStorage.filter(currentBook => currentBook.id !== book.id);
@@ -213,7 +219,7 @@ function addToPochlist(book){
   }else{
     bookInStorage = [book];
   }
-
+ 
   renderPochList(bookInStorage);
 
   sessionStorage.setItem("pochlist", JSON.stringify(bookInStorage));        
@@ -253,32 +259,14 @@ function getPochlistFromStorage() {
     for (const bookStored of myPochList) {
       if (bookStored) {
         const bookParse = JSON.parse(bookStored);
-        addToPochlist(bookParse, true);
+        renderPochList(bookParse, true);
       }
     }
   }
 }
   
-  
+ 
     
          
     
     
-    
-
-
-
-const panels = document.querySelectorAll('.panel');
-
-panels.forEach(panel => {
-    panel.addEventListener('click', () => {
-        removeActiveClasses();
-        panel.classList.add('active');
-    })
-})
-
-function removeActiveClasses(){
-    panels.forEach(panel => {
-        panel.classList.remove('active');
-    })
-}
