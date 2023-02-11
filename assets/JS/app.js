@@ -17,11 +17,11 @@ var book ={
 var bookList =[];
 const searchContainer =
     `<div id="search_container">
-    <h3>Résultat de recherche</h3>
+    <h2>Résultat de recherche</h2>
     
     <div id="search_results" >
-      <ul id="book_list" class="book_list">
-      </ul>
+      <div id="book_list" class="book_list">
+      </div>
     </div>
     </div>
     
@@ -30,29 +30,30 @@ const searchContainer =
     `
     <div id="pochlist_container">
     <div id="mypochlist" >
-      <ul id="pochlist" class="book_list">
-      </ul>
+      <div id="pochlist" class="book_list">
+      </div>
     </div>
     </div>
     `
-   
-    content.insertAdjacentHTML('beforeend', pochlistContainer)
-   //searchContainer.classList.add('hidden');
+var renderDiv; 
+
+content.insertAdjacentHTML('beforeend', pochlistContainer)
 content.appendChild(btnAdd);
+
 btnAdd.addEventListener('click', showSearchBookForm);
-var renderDiv;
+
 function showSearchBookForm() {
     // retrait du bouton ajouter un livre
     btnAdd.classList.add('hidden');
 
-// searchContainer.classList.add('hidden');
     //création de la div pour le formulaire
     const formSection = addElement(parent, "div", {
       class:"modal",
-      innerHTML: "Rechercher un livre",
+      
     });
-    //création de la div pour les resultats de recherche
-    
+    const formTitle = document.createElement("h2");
+    formTitle.innerHTML= "Rechercher un livre";
+
     //creation du formulaire
     const form = document.createElement("form")
     form.classList.add('search_form');
@@ -76,7 +77,7 @@ function showSearchBookForm() {
     inputAuthor.id ='author';
 
 
-    // création du bouton de rechérche
+    // création du bouton de recherche
     
     searchBookBtn.innerHTML = "Rechercher";
     searchBookBtn.classList.add('myBtn');
@@ -102,7 +103,7 @@ function showSearchBookForm() {
 
     // ajout du formulaire à la div
     formSection.appendChild(form);
-   // formSection.insertAdjacentHTML('beforebegin', pochlistContainer);
+  
    
     // Ajouter de la div dans le document
     content.insertAdjacentElement('afterbegin', formSection);
@@ -118,7 +119,6 @@ function showSearchBookForm() {
      );
   }
 
-
 async function searchBook(){
   const outputList = document.querySelector("#book_list");
   //outputList.innerHTML="";
@@ -130,10 +130,6 @@ async function searchBook(){
   
  // console.log(bookList);
 
-  
-  
-
-    outputList.insertAdjacentHTML('afterend',searchContainer);
     if (bookList.totalItems > 0) {
   for(const book of bookList.items){
     renderBook(book)
@@ -143,10 +139,6 @@ async function searchBook(){
     outputList.insertAdjacentElement('beforeend',noResult)
     };
   }
-
-
-
-
 
 function clearElements(){
   const outputList = document.querySelector("#search_results");
@@ -179,37 +171,46 @@ function createBook(book, renderDiv){
   var authors = book.volumeInfo?.authors? book.volumeInfo.authors : author;
   var bookTitle = book.volumeInfo?.title? book.volumeInfo.title : book.title;
 
-  const elementBook = document.createElement('li');
-  elementBook.classList.add('card');
+  const elementBook = document.createElement('div');
+  elementBook.classList.add('book');
 
   elementBook.insertAdjacentHTML('beforeend', `
   
   <div class="book_header">
-  <div class="book_details">
-     <h3 class="book_title">${bookTitle}</h3>
-     <p class="book_authors">${authors}</p>
-     <p class="book_id"> Id : ${book.id}</p>
-     </div>
-     
-     <div class="book_mark">
-           <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
-     </div>
-       <div class="book_description">
-           <span class="description" >${description}</span>
-       </div>
-      
-        <div class="book_cover">
-            <img src="${bookCover}" alt="">
-        </div>
+            <div class="book_details">
+               <h3 class="book_title">${bookTitle}</h3>
+               <p class="book_authors">${authors}</p>
+               <p class="book_id"> Id : ${book.id}</p>
+               </div>
+               
+               <div class="book_mark">
+               <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
+               </div>
+               <div class="book_delete">
+                     <i id="delete_${book.id}" class="fa-solid fa-trash delete"> </i>
+               </div>
+
+              </div>
+                 <div class="book_description">
+                     <span class="description" >${description}</span>
+                 </div>
+                
+                  <div class="book_cover">
+                      <img src="${bookCover}" alt="">
+                  </div>
 
   `);
   
-  var parent = renderDiv|| document.getElementById('book_list'); //container si rien booklist sinon le @
+  var parent = renderDiv|| document.getElementById('book_list'); 
     parent.insertAdjacentElement('beforeend', elementBook);
     return parent;
 }
 function renderBook(book, renderDiv) {
   createBook(book, renderDiv);
+  const iconDelete = document.getElementById(`delete_${book.id}`);
+    iconDelete.classList.add('hidden');
+    const iconBkm = document.getElementById(`bookmark_${book.id}`);
+    iconBkm.classList.remove('hidden');
   document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
 }
 
@@ -219,7 +220,7 @@ function addToPochlist(book){
   if (bookInStorage) {
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
     if (!existingBooks){
-      document.getElementById(`bookmark_${book.id}`).style.color = "red";
+      document.getElementById(`bookmark_${book.id}`).style.color = "#15DEA5";
       bookInStorage.push(book);
     }else if(existingBooks){
       alert(" Vous ne pouvez ajouter deux fois le même livre");
@@ -237,28 +238,43 @@ function addToPochlist(book){
   sessionStorage.setItem("pochlist", JSON.stringify(bookInStorage));        
 }
 
-
-
-
 function renderPochList(pochlist){
+  
   const pochlistDiv = document.getElementById('pochlist');
 
   pochlistDiv.innerHTML = '';
   
   for(let book of pochlist){
     renderBook(book, pochlistDiv);
+    const iconDelete = document.getElementById(`delete_${book.id}`);
+    iconDelete.classList.remove('hidden');
+    const iconBkm = document.getElementById(`bookmark_${book.id}`);
+    iconBkm.classList.add('hidden');
+    document.getElementById(`delete_${book.id}`).addEventListener('click', ()=> removeFromPochlist(book));
+    console.log(iconBkm)
   }
 }
 
+function removeFromPochlist(book){
+  console.log(`delete_${book.id}` + "removed");
 
+  let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
+    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id);
 
-//recup livre envoyer dans pochlist
-//pochlist = session storage
+    if (existingBooks){
+      document.getElementById(`delete_${book.id}`).style.color = "#15DEA5";
+      bookInStorage.splice(book, 1);
+    }
+    else{
+      document.getElementById(`delete_${book.id}`).style.color = "white";
+      bookInStorage = bookInStorage.filter(currentBook => currentBook.id !== book.id);
+    }
 
-//2.boucler sur pochlist et voir si le livre existe deja dans pochlist si oui on msg "livre deja ajouté"
-//3. ajouter le book dans [] et le renvoyer 
-    
-    
+ 
+  renderPochList(bookInStorage);
+
+  sessionStorage.setItem("pochlist", JSON.stringify(bookInStorage));   
+}
 
 function getPochlistFromStorage() {
   const pochlist = sessionStorage.getItem("pochlist");
