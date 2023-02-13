@@ -310,6 +310,8 @@ function truncate(description, maxlength) {
     description.slice(0, maxlength - 1) + '…' : description;
 }
     
-       
+function toggleIcon(icon){
+  icon.classList.toggle("fa-trash");
+  }        
     
     
