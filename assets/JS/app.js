@@ -229,7 +229,6 @@ function addToPochlist(book){
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
     if (!existingBooks){
       toggleIcon(document.getElementById(`bookmark_${book.id}`));
-      document.getElementById(`bookmark_${book.id}`).style.color = "#d62f48";
       bookInStorage.push(book);
     }else if(existingBooks){
       toggleIcon(document.getElementById(`bookmark_${book.id}`));
@@ -258,10 +257,7 @@ function renderPochList(pochlist){
     renderBook(book, pochlistDiv);
     icon = document.getElementById(`bookmark_${book.id}`);
     toggleIcon(icon);
-    icon.setAttribute("id",`delete_${book.id}`);
-    icon.classList.remove('bookmark');
-    icon.classList.remove('fa-bookmark');
-    icon.classList.add('delete');
+    
     document.getElementById(`delete_${book.id}`).addEventListener('click', ()=> removeFromPochlist(book));
     console.log("ùùùùùùù" );
   }
@@ -312,6 +308,11 @@ function truncate(description, maxlength) {
     
 function toggleIcon(icon){
   icon.classList.toggle("fa-trash");
+  icon.setAttribute("id",`delete_${book.id}`);
+    icon.classList.remove('bookmark');
+    icon.classList.remove('fa-bookmark');
+    icon.classList.add('delete');
+    icon.style.color = "#d62f48";
   }        
     
     
