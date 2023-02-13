@@ -18,7 +18,7 @@ var bookList =[];
 const searchContainer =
     `<div id="search_container">
     <h2>Résultat de recherche</h2>
-    
+    <hr>
     <div id="search_results" >
       <div id="book_list" class="book_list">
       </div>
@@ -120,15 +120,20 @@ function showSearchBookForm() {
   }
 
 async function searchBook(){
+
   const outputList = document.querySelector("#book_list");
   //outputList.innerHTML="";
   book.title = inputTitle.value;
   book.author = inputAuthor.value;
+  
 
   const url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
   bookList = await fetch(url).then((response) => response.json());
   
- // console.log(bookList);
+//s'assurer qu'au moins un champ est bien rempli avant de lancer la recherche
+if(book.title =='' && book.author == ''){
+  alert('Veuillez saisir au moins un auteur ou un titre de livre svp.')
+}
 
     if (bookList.totalItems > 0) {
   for(const book of bookList.items){
@@ -138,11 +143,15 @@ async function searchBook(){
     noResult.innerHTML= "Aucun livre n'a été trouvé";
     outputList.insertAdjacentElement('beforeend',noResult)
     };
+
+    //vider les inputs ***********************************************************************
+  clearElements('#title');
+  clearElements('#author');
   }
 
-function clearElements(){
-  const outputList = document.querySelector("#search_results");
-  outputList.innerHTML ="";
+function clearElements(id){
+  const element = document.querySelector(id);
+  element.value ="";
 }
 
 function addElement(parent,tag, attributes){
@@ -184,11 +193,9 @@ function createBook(book, renderDiv){
                </div>
                
                <div class="book_mark">
-               <i id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
+               <i onclick="toggleIcon(this)" id="bookmark_${book.id}" class="fa-solid fa-bookmark bookmark" ></i>
                </div>
-               <div class="book_delete">
-                     <i id="delete_${book.id}" class="fa-solid fa-trash delete"> </i>
-               </div>
+               
 
               </div>
                  <div class="book_description">
@@ -203,14 +210,15 @@ function createBook(book, renderDiv){
   
   var parent = renderDiv|| document.getElementById('book_list'); 
     parent.insertAdjacentElement('beforeend', elementBook);
+    
     return parent;
 }
 function renderBook(book, renderDiv) {
   createBook(book, renderDiv);
-  const iconDelete = document.getElementById(`delete_${book.id}`);
-    iconDelete.classList.add('hidden');
-    const iconBkm = document.getElementById(`bookmark_${book.id}`);
-    iconBkm.classList.remove('hidden');
+  //const iconDelete = document.getElementById(`delete_${book.id}`);
+   // iconDelete.classList.add('hidden');
+
+    
   document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
 }
 
@@ -220,9 +228,12 @@ function addToPochlist(book){
   if (bookInStorage) {
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
     if (!existingBooks){
-      document.getElementById(`bookmark_${book.id}`).style.color = "#15DEA5";
+      toggleIcon(document.getElementById(`bookmark_${book.id}`));
+      document.getElementById(`bookmark_${book.id}`).style.color = "#d62f48";
       bookInStorage.push(book);
     }else if(existingBooks){
+      toggleIcon(document.getElementById(`bookmark_${book.id}`));
+      document.getElementById(`bookmark_${book.id}`).style.color = "#d62f48";
       alert(" Vous ne pouvez ajouter deux fois le même livre");
      }
     else{
@@ -234,7 +245,6 @@ function addToPochlist(book){
   }
  
   renderPochList(bookInStorage);
-
   sessionStorage.setItem("pochlist", JSON.stringify(bookInStorage));        
 }
 
@@ -246,12 +256,14 @@ function renderPochList(pochlist){
   
   for(let book of pochlist){
     renderBook(book, pochlistDiv);
-    const iconDelete = document.getElementById(`delete_${book.id}`);
-    iconDelete.classList.remove('hidden');
-    const iconBkm = document.getElementById(`bookmark_${book.id}`);
-    iconBkm.classList.add('hidden');
+    icon = document.getElementById(`bookmark_${book.id}`);
+    toggleIcon(icon);
+    icon.setAttribute("id",`delete_${book.id}`);
+    icon.classList.remove('bookmark');
+    icon.classList.remove('fa-bookmark');
+    icon.classList.add('delete');
     document.getElementById(`delete_${book.id}`).addEventListener('click', ()=> removeFromPochlist(book));
-    console.log(iconBkm)
+    console.log("ùùùùùùù" );
   }
 }
 
@@ -298,6 +310,6 @@ function truncate(description, maxlength) {
     description.slice(0, maxlength - 1) + '…' : description;
 }
     
-         
+       
     
     

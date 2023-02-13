@@ -13,6 +13,14 @@
   box-sizing: border-box;
 }
 
+:root{
+  --fs-xl: 3rem;
+  --fs-600: 1.5rem;
+  --fs-500: 1.25rem;
+  --fs-400: 1rem;
+  
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -30,23 +38,53 @@ body {
   min-height: 90vh;
   padding: 3em;
   color: #0D0D0D;
-  background-color: #F2F2F2;
- 
+  background-color: #f1f6f6a1;
+  height: 100%; 
+  font-size: var(--fs-400);
 }
-
+#myBooks{
+  width: 100%;
+}
 h1 {
   font-family: "font-family: 'Righteous', cursive";
   font-weight: 800;
   margin: 1em 0;
   font-size: 1.5em;
   margin: 1em 0;
+  text-align: center;
+  font-size: var(--fs-600);
 }
 
 h2 {
   font-family: "font-family: 'Righteous', cursive";
-  font-weight: 800;
-  margin: 1em 0;
-  font-size: 1.2em;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.5em;
+  padding-bottom: 15px;
+  position: relative;
+  font-size: var(--fs-500);
+}
+h2:hover{
+  transform: none;
+}
+h2:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  width: 6em;
+  background-color: #111;
+}
+h2:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  width: 6em;
+  background-color: #111;
 }
 
 
@@ -60,18 +98,22 @@ h2 {
   cursor: pointer;
   color: #F2F2F2;
   font-family: "font-family: 'Quicksand', sans-serif";
-  font-size: 1em;
+  font-size: var(--fs-400);
   font-weight: bold;
   padding: 6px 12px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #269fa3;
-  min-width: 150px;
-  max-width: 300px;
+  min-width: 100px;
+  max-width: 200px;
   margin: 0.3em 0;
+  transition-property: transform;
+    transition-duration: 1000ms;
+    transform: scale(1);
 }
 .myBtn:hover {
   background: linear-gradient(to bottom, #1c8c81 5%, #2bd9b9 100%);
   background-color: #199e83;
+  transform: scale(1.10);
 }
 .myBtn#cancel {
   box-shadow: 0px 10px 14px -7px #d62f48;
@@ -111,7 +153,7 @@ h2 {
 
 .logo {
   width: 125px;
-  margin: 2%;
+  margin: 0 auto;
   display: block;
   padding: 5px;
   box-shadow: 5px 5px 20px #6F6E77;
@@ -125,7 +167,7 @@ h2 {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 1rem;
+  font-size: var(--fs-400);
   margin: 10px 30px;
   border-radius: 5px;
 }
@@ -135,30 +177,26 @@ h2 {
 }
 
 .book_list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+  display: block;
+  
   gap: 2rem;
   list-style: none;
-}
-.book_list li {
-  list-style: none;
-  min-width: 35em;
 }
 
 
 h3.book_title {
   font-family: "font-family: 'Righteous', cursive";
-font-size: 1.5em;
+font-size: var(--fs-500);
 font-weight: bold;
 }
 
 .book_id, .book_authors {
   font-family: "font-family: 'Quicksand', sans-serif";
-  font-size: 1.15em;
+  font-size: var(--fs-400);
 }
 
 button {
-  font-size: 1.5em;
+  font-size: var(--fs-400);
 }
 
 .book{
@@ -168,7 +206,12 @@ button {
   padding: 2em;
   text-decoration: none;
   list-style: none;
-  background-color: #e7e7e7;
+  background: rgba( 0, 0, 0, 0.15 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 9px );
+-webkit-backdrop-filter: blur( 9px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
   box-shadow: 0px 10px 14px -7px #3b3b3b;
   color: #0D0D0D;
 }
@@ -181,18 +224,32 @@ button {
 }
 .book .book_description{
     margin-bottom:2em ;
-    font-size: 1.25em;
+    font-size: var(--fs-400);
     min-height: 6em;
 }
+.book_cover{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.book img{
+  width: 100px;
+  transition-property: transform;
+    transition-duration: 1000ms;
+    transform: scale(1);                                                                                                                        
+}
 
+.book img:hover{
+  transform: scale(1.60);
+}
 i {
   width:  4em;
   padding-left: 3em;
 }
 
 .bookmark, .delete {
-  color: white;
-  font-size: 1.5em;
+  color:#d62f48;
+  font-size: var(--fs-500);
 }
 
 .search_results {
@@ -205,4 +262,46 @@ i {
 
 .show {
   opacity: 100%;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*# Tablets */
+
+@media screen and (min-width: 820px) {
+  :root{
+    --fs-xl: 3.8rem;
+    --fs-600: 2rem;
+    --fs-500: 1.25rem;
+    --fs-400: 1.125rem;
+    
+  }
+  
+  .book_list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+    gap: 2rem;
+    list-style: none;
+  }
+  .book img{
+    width: 150px;
+    transition-property: transform;
+      transition-duration: 1000ms;
+      transform: scale(1);
+  }
+}
+
+/*# PC */
+@media screen and (min-width: 1025px) {
+  :root{
+    --fs-xl: 5rem;
+    --fs-600: 2.5rem;
+    --fs-500: 1.4rem;
+    --fs-400: 1.2rem;
+    
+  }
+  .book img{
+    width: 200px;
+    transition-property: transform;
+      transition-duration: 1000ms;
+      transform: scale(1);
+  }
+}
