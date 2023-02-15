@@ -210,6 +210,9 @@ function createBook(book, renderDiv){
   
   var parent = renderDiv|| document.getElementById('book_list'); 
     parent.insertAdjacentElement('beforeend', elementBook);
+
+
+    checkIfExisting(elementBook);
     
     return parent;
 }
@@ -217,30 +220,29 @@ function renderBook(book, renderDiv) {
   createBook(book, renderDiv);
   //const iconDelete = document.getElementById(`delete_${book.id}`);
    // iconDelete.classList.add('hidden');
-
-    
   document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
+  checkIfExisting(book);
+
 }
 
 function addToPochlist(book){
   let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
+  
 
   if (bookInStorage) {
-    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
+    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id);
+    //checkIfExisting(existingBooks);
     if (!existingBooks){
-      toggleIcon(document.getElementById(`bookmark_${book.id}`));
+      //document.getElementById(`bookmark_${book.id}`).style.color = "#15DEA5";
       bookInStorage.push(book);
-    }else if(existingBooks){
-      toggleIcon(document.getElementById(`bookmark_${book.id}`));
-      document.getElementById(`bookmark_${book.id}`).style.color = "#d62f48";
+      //document.getElementById(`bookmark_${book.id}`).style.color = "green";
+    }else {
       alert(" Vous ne pouvez ajouter deux fois le même livre");
      }
-    else{
-      document.getElementById(`bookmark_${book.id}`).style.color = "white";
-      bookInStorage = bookInStorage.filter(currentBook => currentBook.id !== book.id);
-    }
+    
   }else{
     bookInStorage = [book];
+   // document.getElementById(`bookmark_${book.id}`).style.color = "green";
   }
  
   renderPochList(bookInStorage);
@@ -254,12 +256,14 @@ function renderPochList(pochlist){
   pochlistDiv.innerHTML = '';
   
   for(let book of pochlist){
+
     renderBook(book, pochlistDiv);
     icon = document.getElementById(`bookmark_${book.id}`);
     toggleIcon(icon);
-    
+    icon.setAttribute("id",`delete_${book.id}`);
+    icon.setAttribute("onclick",``)
     document.getElementById(`delete_${book.id}`).addEventListener('click', ()=> removeFromPochlist(book));
-    console.log("ùùùùùùù" );
+ 
   }
 }
 
@@ -308,11 +312,23 @@ function truncate(description, maxlength) {
     
 function toggleIcon(icon){
   icon.classList.toggle("fa-trash");
+  if(icon.class = "fa-trash"){
   icon.setAttribute("id",`delete_${book.id}`);
     icon.classList.remove('bookmark');
     icon.classList.remove('fa-bookmark');
     icon.classList.add('delete');
     icon.style.color = "#d62f48";
-  }        
+}  
+}
+function checkIfExisting(book){
+  let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
+  if (bookInStorage) {
+    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
+    if (existingBooks){
+      document.getElementById(`bookmark_${book.id}`).style.color = "#2bd9b9"
+     // document.getElementById(`bookmark_${book.id}`).style.color="#d62f48"; 
+    }
+}
+} 
     
     
