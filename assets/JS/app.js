@@ -268,8 +268,7 @@ function renderPochList(pochlist){
 }
 
 function removeFromPochlist(book){
-  console.log(`delete_${book.id}` + "removed");
-
+ 
   let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id);
 
@@ -325,7 +324,7 @@ function checkIfExisting(book){
   if (bookInStorage) {
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
     if (existingBooks){
-      document.getElementById(`bookmark_${book.id}`).style.color = "#2bd9b9"
+      document.getElementById(`bookmark_${book.id}`).style.color = "#2bd9b9";
      // document.getElementById(`bookmark_${book.id}`).style.color="#d62f48"; 
     }
 }

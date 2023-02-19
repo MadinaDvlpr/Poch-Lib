@@ -2,27 +2,31 @@
 
 Poch'Lib is an online book management application with 2 main features
 . Searching and adding a book to a list
-. Display and delete books 
+. Display and delete books from my pochlist
 
-Designed for our client "La plume enchantée". The application is a Single Page Application responsive with means it can be used on any medium (pc, smartphone, tablet...)
+The app has been designed for our client "La plume enchantée". 
+It is a Single Page Application  made responsive for pc, smartphone and tablets.
 
 
 # Get started
-It is necessary to have a connection to a web browser (Chrome, Firefox, Edge, Safari...) in order to use the Poch'lib application. http://127.0.0.1:5500/Poch_Lib/Poch_Lib/index.html
+You must have a connection to a web browser (Chrome, Firefox, Edge, Safari...) in order to use the Poch'lib application. 
 
 # Authors
-Joris, UX designer Magdalena, fullstack developer Marie, CTO Alexis
-My Awesome App company, is a startup based in Paris
+My Awesome App company, is a startup based in Paris.
+
+Team members of thios project are:
+Joris Project Manager, Magdalena Fullstack developer, Louis back end developer and Marie CTO.
+
 
 # License
-It will not be possible for you to use Poch'lib during a public project due to the use of APIs that do not allow the sharing of returned information.
+It is not be possible to use Poch'lib in a public project due to the use of APIs. API's does not allow the sharing of returned information.
 
 # API
-The Google Book API is used when searching for books https://books.google.fr/
+Use of Google Book API https://books.google.fr/
 
-Google Fonts is used to obtain the desired font https://fonts.google.com/
+App Fonts have been found on Google Fonts https://fonts.google.com/
 
-Font Awesome library is used for icons https://fontawesome.com/
+Icons are from Font Awesome https://fontawesome.com/
 
 # Programming language
-The application was programmed mainly in JavaScript Plug-ins ajax, sass and Json allow the compilation of the code
+The app has been programmed in Javascript, HTML and CSS
