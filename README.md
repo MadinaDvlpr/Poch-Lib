@@ -29,4 +29,4 @@ App Fonts have been found on Google Fonts https://fonts.google.com/
 Icons are from Font Awesome https://fontawesome.com/
 
 # Programming language
-The app has been programmed in Javascript, HTML and CSS
+The app has been programmed in Javascript, HTML and SCSS
