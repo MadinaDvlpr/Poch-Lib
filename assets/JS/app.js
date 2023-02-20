@@ -117,7 +117,7 @@ async function searchBook(){
   bookList = await fetch(url).then((response) => response.json());
   
 //making sure at least one input typed
-if(book.title =='' && book.author == ''){
+if(book.title ==='' && book.author === ''){
   alert('Veuillez saisir au moins un auteur ou un titre de livre svp.')
 }
 
@@ -212,7 +212,7 @@ function addToPochlist(book){
   checkIfExisting(book)
 
   if (bookInStorage) {
-    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id);
+    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id === book.id);
 
     if (!existingBooks){
       document.getElementById(`bookmark_${book.id}`).style.color = "#15DEA5";
@@ -252,10 +252,10 @@ function renderPochList(pochlist){
 function removeFromPochlist(book){
  
   let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
-    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id);
+    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id === book.id);
 
     if (existingBooks){
-      document.getElementById(`delete_${book.id}`).style.color = "#15DEA5";
+      //document.getElementById(`delete_${book.id}`).style.color = "#15DEA5";
       bookInStorage.splice(book, 1);
     }
     else{
@@ -297,7 +297,7 @@ function toggleIcon(icon){
 function checkIfExisting(book){
   let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
   if (bookInStorage) {
-    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
+    const existingBooks = bookInStorage.find((currentBook)=>currentBook.id === book.id)
     if (existingBooks){     
     document.getElementById(`bookmark_${book.id}`).style.color="#d62f48";
 
