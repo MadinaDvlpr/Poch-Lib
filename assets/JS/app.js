@@ -43,22 +43,21 @@ content.appendChild(btnAdd);
 btnAdd.addEventListener('click', showSearchBookForm);
 
 function showSearchBookForm() {
-    // retrait du bouton ajouter un livre
+    // deleting add button
     btnAdd.classList.add('hidden');
 
-    //création de la div pour le formulaire
+    //create div for form
     const formSection = addElement(parent, "div", {
       class:"modal",
-      
     });
     const formTitle = document.createElement("h2");
     formTitle.innerHTML= "Rechercher un livre";
 
-    //creation du formulaire
+    //create form
     const form = document.createElement("form")
     form.classList.add('search_form');
 
-    //création de l'input titre du livre
+    //create title input
     var labelTitle = document.createElement("label");
     labelTitle.innerHTML = "Titre :";
     inputTitle.setAttribute("type", "text");
@@ -66,9 +65,7 @@ function showSearchBookForm() {
     inputTitle.setAttribute("placeholder", "Titre");
     inputTitle.id ='title';
 
-
-    //création de l'input auteur du livre
-    
+   //create author input
     var labelAuthor = document.createElement("label");
     labelAuthor.innerHTML = "Auteur :";
     inputAuthor.setAttribute("type", "text");
@@ -76,24 +73,19 @@ function showSearchBookForm() {
     inputAuthor.setAttribute("placeholder", "Auteur");
     inputAuthor.id ='author';
 
-
-    // création du bouton de recherche
-    
+    // //create look up button
     searchBookBtn.innerHTML = "Rechercher";
     searchBookBtn.classList.add('myBtn');
-    //searchBookBtn.type = "submit";
     searchBookBtn.style.width = "20%";
-    
   
-    // Création du bouton annuler
-   
+    // //create cancel button
     deleteBtn.innerHTML = "Annuler";
     deleteBtn.classList.add('myBtn');
     deleteBtn.id = 'cancel';
     deleteBtn.type = "reset";
     deleteBtn.style.width = "20%";
 
-    // Ajouter des divers élements dans le formulaire
+    // add elements to form
     form.appendChild(labelTitle);
     form.appendChild(inputTitle);
     form.appendChild(labelAuthor);
@@ -101,19 +93,14 @@ function showSearchBookForm() {
     form.appendChild(searchBookBtn);
     form.appendChild(deleteBtn);
 
-    // ajout du formulaire à la div
+    // add form to div
     formSection.appendChild(form);
   
-   
-    // Ajouter de la div dans le document
+    //add div to DOM
     content.insertAdjacentElement('afterbegin', formSection);
-
-     //insertion de la div résultats search container 
      formSection.insertAdjacentHTML('beforeend',searchContainer);
     searchBookBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        //console.log(inputTitle.value);
-       // console.log(inputAuthor.value);
         searchBook();
       }
      );
@@ -122,7 +109,6 @@ function showSearchBookForm() {
 async function searchBook(){
 
   const outputList = document.querySelector("#book_list");
-  //outputList.innerHTML="";
   book.title = inputTitle.value;
   book.author = inputAuthor.value;
   
@@ -130,7 +116,7 @@ async function searchBook(){
   const url="https://www.googleapis.com/books/v1/volumes?AIzaSyBPzxg5cRwtZ9C-dyJqIAegQIHhngSHPdQ&q="+ book.title+ "" + book.author;
   bookList = await fetch(url).then((response) => response.json());
   
-//s'assurer qu'au moins un champ est bien rempli avant de lancer la recherche
+//making sure at least one input typed
 if(book.title =='' && book.author == ''){
   alert('Veuillez saisir au moins un auteur ou un titre de livre svp.')
 }
@@ -144,7 +130,7 @@ if(book.title =='' && book.author == ''){
     outputList.insertAdjacentElement('beforeend',noResult)
     };
 
-    //vider les inputs ***********************************************************************
+    //clear inputs ***********************************************************************
   clearElements('#title');
   clearElements('#author');
   }
@@ -169,8 +155,6 @@ var parent = renderDiv || document.getElementById('content');
 }
 function createBook(book, renderDiv){
   var placeHldr = document.createElement('img');
-  
-  //je crée la variable qui va contenir l'image par defaut ici
   placeHldr.setAttribute("src", "/assets/img/unavailable.png");
   var bookCover = book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : placeHldr.src;
   var desc = "Information manquante";
@@ -218,31 +202,29 @@ function createBook(book, renderDiv){
 }
 function renderBook(book, renderDiv) {
   createBook(book, renderDiv);
-  //const iconDelete = document.getElementById(`delete_${book.id}`);
-   // iconDelete.classList.add('hidden');
+  
+   checkIfExisting(book);
   document.getElementById(`bookmark_${book.id}`).addEventListener('click', ()=> addToPochlist(book));
-  checkIfExisting(book);
-
 }
 
 function addToPochlist(book){
   let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
-  
+  checkIfExisting(book)
 
   if (bookInStorage) {
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id);
-    //checkIfExisting(existingBooks);
+
     if (!existingBooks){
-      //document.getElementById(`bookmark_${book.id}`).style.color = "#15DEA5";
+      document.getElementById(`bookmark_${book.id}`).style.color = "#15DEA5";
       bookInStorage.push(book);
-      //document.getElementById(`bookmark_${book.id}`).style.color = "green";
+   
     }else {
       alert(" Vous ne pouvez ajouter deux fois le même livre");
      }
     
   }else{
     bookInStorage = [book];
-   // document.getElementById(`bookmark_${book.id}`).style.color = "green";
+
   }
  
   renderPochList(bookInStorage);
@@ -311,21 +293,14 @@ function truncate(description, maxlength) {
     
 function toggleIcon(icon){
   icon.classList.toggle("fa-trash");
-  if(icon.class = "fa-trash"){
-  icon.setAttribute("id",`delete_${book.id}`);
-    icon.classList.remove('bookmark');
-    icon.classList.remove('fa-bookmark');
-    icon.classList.add('delete');
-    icon.style.color = "#d62f48";
-}  
 }
 function checkIfExisting(book){
   let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
   if (bookInStorage) {
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
-    if (existingBooks){
-      document.getElementById(`bookmark_${book.id}`).style.color = "#2bd9b9";
-     // document.getElementById(`bookmark_${book.id}`).style.color="#d62f48"; 
+    if (existingBooks){     
+    document.getElementById(`bookmark_${book.id}`).style.color="#d62f48";
+
     }
 }
 } 
