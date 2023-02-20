@@ -294,7 +294,7 @@ function truncate(description, maxlength) {
 function toggleIcon(icon){
   icon.classList.toggle("fa-trash");
 }
-function checkIfExisting(book){
+async function checkIfExisting(book){
   let bookInStorage = JSON.parse(sessionStorage.getItem("pochlist"));
   if (bookInStorage) {
     const existingBooks = bookInStorage.find((currentBook)=>currentBook.id == book.id)
